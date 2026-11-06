@@ -1,6 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
 
-const PUBLIC_TRANSLATIONS = ['kjv', 'web', 'asv'];
+const PUBLIC_TRANSLATIONS = ['kjv', 'web', 'asv', 'bbe'];
 const ALL_TRANSLATIONS = [...PUBLIC_TRANSLATIONS, 'nlt'];
 
 const NLT_BOOK_ALIASES = {

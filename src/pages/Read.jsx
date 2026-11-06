@@ -11,6 +11,7 @@ const TRANSLATIONS = [
   { id: 'kjv', label: 'King James Version' },
   { id: 'web', label: 'World English Bible' },
   { id: 'asv', label: 'American Standard Version' },
+  { id: 'bbe', label: 'Bible in Basic English' },
 ];
 
 const STORE_KEY = 'scripturepath:last-read';
