@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Hedvig+Letters+Serif:opsz@12..24&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -32,9 +32,9 @@
     --chart-4: 205 30% 42%;
     --chart-5: 340 32% 55%;
     --radius: 0.5rem;
-    --font-heading: 'Hedvig Letters Serif', Georgia, 'Times New Roman', serif;
-    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
-    --font-display: 'Hedvig Letters Serif', Georgia, 'Times New Roman', serif;
+    --font-heading: 'Roboto', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+    --font-body: 'Roboto', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+    --font-display: 'Roboto', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     --sidebar-background: 38 32% 94%;
     --sidebar-foreground: 210 100% 42%;
@@ -97,8 +97,8 @@
   }
 
   h1, h2, h3, h4 {
-    @apply font-heading font-normal;
-    letter-spacing: -0.01em;
+    @apply font-heading font-medium;
+    letter-spacing: -0.015em;
     text-shadow: 0 0 22px hsl(var(--foreground) / 0.28);
   }
 }
