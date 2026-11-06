@@ -11,6 +11,7 @@ export default function GroupDetail() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [group, setGroup] = useState(null);
+  const [members, setMembers] = useState(null);
   const [status, setStatus] = useState('loading');
   const [busy, setBusy] = useState(false);
 
@@ -19,8 +20,12 @@ export default function GroupDetail() {
     (async () => {
       try {
         const record = await base44.entities.StudyGroup.get(groupId);
+        const resolved = await base44.functions
+          .invoke('groupMembers', { group_ids: [groupId] })
+          .catch(() => null);
         if (active) {
           setGroup(record);
+          setMembers(resolved?.data?.groups?.[groupId] || null);
           setStatus('ready');
         }
       } catch {
@@ -138,7 +143,7 @@ export default function GroupDetail() {
           <p className="eyebrow">Members</p>
           <div className="mt-3">
             <MemberList
-              members={group.member_profiles || []}
+              members={members || group.member_profiles || []}
               ownerId={group.created_by_id}
             />
           </div>

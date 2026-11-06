@@ -9,6 +9,7 @@ import JoinGroupBanner from '@/components/groups/JoinGroupBanner';
 export default function Groups() {
   const navigate = useNavigate();
   const [groups, setGroups] = useState([]);
+  const [memberNames, setMemberNames] = useState({});
   const [loading, setLoading] = useState(true);
   const [memberCount, setMemberCount] = useState(0);
   const [creating, setCreating] = useState(false);
@@ -24,8 +25,14 @@ export default function Groups() {
           base44.entities.StudyGroup.list({ sort: '-updated_date', limit: 50 }),
           base44.functions.invoke('communityStats').catch(() => null),
         ]);
+        const names = page.items.length
+          ? await base44.functions
+              .invoke('groupMembers', { group_ids: page.items.map((group) => group.id) })
+              .catch(() => null)
+          : null;
         if (!active) return;
         setGroups(page.items);
+        setMemberNames(names?.data?.groups || {});
         setMemberCount(stats?.data?.members || 0);
       } finally {
         if (active) setLoading(false);
@@ -79,7 +86,7 @@ export default function Groups() {
       ) : groups.length > 0 ? (
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {groups.map((group) => (
-            <GroupCard key={group.id} group={group} />
+            <GroupCard key={group.id} group={group} memberNames={memberNames[group.id]} />
           ))}
         </div>
       ) : (

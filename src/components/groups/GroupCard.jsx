@@ -9,9 +9,9 @@ const initials = (name = '') =>
     .map((part) => part[0].toUpperCase())
     .join('');
 
-export default function GroupCard({ group }) {
-  const profiles = group.member_profiles || [];
-  const count = profiles.length || group.members?.length || 0;
+export default function GroupCard({ group, memberNames }) {
+  const members = memberNames?.length ? memberNames : group.member_profiles || [];
+  const count = members.length || group.members?.length || 0;
 
   return (
     <Link
@@ -32,24 +32,22 @@ export default function GroupCard({ group }) {
           {count} {count === 1 ? 'member' : 'members'}
         </p>
 
-        {profiles.length > 0 ? (
+        {members.length > 0 ? (
           <ul className="mt-3 flex flex-wrap gap-1.5">
-            {profiles.map((profile) => (
+            {members.map((member) => (
               <li
-                key={profile.user_id}
+                key={member.user_id}
                 className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-secondary/60 py-1 pl-1 pr-2.5 text-[12px] text-foreground/85"
               >
                 <span className="grid h-5 w-5 place-items-center rounded-full bg-foreground/10 text-[9px] font-medium uppercase">
-                  {initials(profile.name)}
+                  {initials(member.name)}
                 </span>
-                {profile.name}
+                {member.name || 'Member'}
               </li>
             ))}
           </ul>
         ) : (
-          <p className="mt-2 text-[12px] text-muted-foreground">
-            {count === 0 ? 'No members yet' : 'Members have not shared their names'}
-          </p>
+          <p className="mt-2 text-[12px] text-muted-foreground">No members yet</p>
         )}
       </div>
     </Link>
