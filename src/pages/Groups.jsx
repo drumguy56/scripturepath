@@ -10,6 +10,7 @@ export default function Groups() {
   const navigate = useNavigate();
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [memberCount, setMemberCount] = useState(0);
   const [creating, setCreating] = useState(false);
   const [inviteCode, setInviteCode] = useState(
     new URLSearchParams(window.location.search).get('code') || ''
@@ -19,8 +20,13 @@ export default function Groups() {
     let active = true;
     (async () => {
       try {
-        const page = await base44.entities.StudyGroup.list({ sort: '-updated_date', limit: 50 });
-        if (active) setGroups(page.items);
+        const [page, stats] = await Promise.all([
+          base44.entities.StudyGroup.list({ sort: '-updated_date', limit: 50 }),
+          base44.functions.invoke('communityStats').catch(() => null),
+        ]);
+        if (!active) return;
+        setGroups(page.items);
+        setMemberCount(stats?.data?.members || 0);
       } finally {
         if (active) setLoading(false);
       }
@@ -42,6 +48,11 @@ export default function Groups() {
             Start a group for your friends, small group or family. Share the invite link and
             everyone walks through the same study at their own pace.
           </p>
+          {!loading && memberCount > 0 && (
+            <p className="mt-5 text-[11.5px] uppercase tracking-[0.12em] text-muted-foreground">
+              {memberCount} readers in the app
+            </p>
+          )}
         </div>
         <button
           type="button"
