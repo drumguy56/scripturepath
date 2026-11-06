@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import Hero from '@/components/Hero';
+import VerseOfTheDay from '@/components/VerseOfTheDay';
 import StudyCard from '@/components/StudyCard';
 import ContinueStudyCard from '@/components/ContinueStudyCard';
 import { base44 } from '@/api/base44Client';
@@ -78,6 +79,10 @@ export default function Home() {
   return (
     <>
       <Hero />
+
+      <section className="mx-auto max-w-[1180px] px-5 pt-12 sm:px-8 md:pt-14">
+        <VerseOfTheDay />
+      </section>
 
       <section className="mx-auto max-w-[1180px] px-5 pt-16 sm:px-8 md:pt-20">
         <div className="mb-6 flex items-end justify-between gap-6">
