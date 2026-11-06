@@ -469,4 +469,229 @@ export const CURRICULUM = [
       },
     ],
   },
+  {
+    study: {
+      slug: 'ruth',
+      title: 'Ruth: Loyal Love',
+      summary:
+        'A Moabite widow, a barley field, and a redeemer who does not delay — the quiet story of covenant love.',
+      category: 'Old Testament',
+      level: 'Beginning',
+      cover_image: `${IMG}/12050e86c_generated_image.png`,
+      duration_label: 'About 12 minutes a lesson',
+      order: 6,
+    },
+    lessons: [
+      {
+        title: 'Where You Go, I Will Go',
+        scripture_reference: 'Ruth 1:14-18',
+        scripture_text:
+          'And they lifted up their voice, and wept again: and Orpah kissed her mother in law; but Ruth clave unto her. And she said, Behold, thy sister in law is gone back unto her people, and unto her gods: return thou after thy sister in law.\n\nAnd Ruth said, Intreat me not to leave thee, or to return from following after thee: for whither thou goest, I will go; and where thou lodgest, I will lodge: thy people shall be my people, and thy God my God: Where thou diest, will I die, and there will I be buried: the LORD do so to me, and more also, if ought but death part thee and me. When she saw that she was stedfastly minded to go with her, then she left speaking unto her.',
+        teaching:
+          'The book opens in famine and ends in a genealogy, and the middle is mostly emptiness. Naomi has lost her husband and both sons in a foreign country. She tells her daughters-in-law to go home, and she is right to. Orpah kisses her goodbye, and no one in the story blames her.\n\nRuth stays, and what she says is one of the most quoted vows in Scripture. Read it slowly: where you go, I go. Where you stay, I stay. Your people, my people. Your God, my God. Ruth is a Moabite, from a nation with its own gods, and she binds herself to Israel’s God on the strength of a widowed mother-in-law’s love.\n\nThe narrator tells us she was “stedfastly minded.” Not swept up in emotion — settled. Faith in this book looks less like certainty about the future and more like refusing to leave. Everything that follows grows out of this one decision.',
+        reflection_prompts: [
+          'What does Ruth’s vow reveal about the kind of loyalty that outlasts circumstances?',
+          'Who has been a Ruth to you — someone who stayed when leaving would have been easier?',
+          'Where is God inviting you to stay, even though the road ahead is unclear?',
+        ],
+        prayer:
+          'Lord, thank you for the people who stayed with me when they did not have to. Form in me a love that is settled rather than convenient. Amen.',
+      },
+      {
+        title: 'Grace in a Stranger’s Field',
+        scripture_reference: 'Ruth 2:8-12',
+        scripture_text:
+          'Then said Boaz unto Ruth, Hearest thou not, my daughter? Go not to glean in another field, neither go from hence, but abide here fast by my maidens: Let thine eyes be on the field that they do reap, and go thou after them: have I not charged the young men that they shall not touch thee? and when thou art athirst, go unto the vessels, and drink of that which the young men have drawn.\n\nThen she fell on her face, and bowed herself to the ground, and said unto him, Why have I found grace in thine eyes, that thou shouldest take knowledge of me, seeing I am a stranger? And Boaz answered and said unto her, It hath fully been shewed me, all that thou hast done unto thy mother in law since the death of thine husband: and how thou hast left thy father and thy mother, and the land of thy nativity, and art come unto a people which thou knewest not heretofore. The LORD recompense thy work, and a full reward be given thee of the LORD God of Israel, under whose wings thou art come to trust.',
+        teaching:
+          'Gleaning was the Old Testament’s provision for the poor: leave the edges of the field unharvested so the hungry can walk behind the reapers. Ruth is doing exactly what the law allowed, in a field that happened to belong to a wealthy relative of her dead father-in-law.\n\nBoaz does more than the law requires. He tells her to stay, orders his men to protect her, and offers her water drawn by his own servants. Ruth, the foreigner, asks the honest question: why have I found grace in your eyes? She has no claim on him. That is what grace means.\n\nHis answer is striking. He has heard the story of her loyalty, and he blesses her with an image she will need later: you have come to trust under the wings of the LORD. Boaz notices her faith before he offers her anything. God’s kindness often arrives through the ordinary generosity of one person paying attention.',
+        reflection_prompts: [
+          'Where has kindness come to you lately through an ordinary person rather than a dramatic answer?',
+          'Ruth asks “why have I found grace?” How do you answer that question about your own life?',
+          'Who is a stranger near you who could use the edges of your field?',
+        ],
+        prayer:
+          'Father, you have been kind to me beyond anything I could claim. Make me attentive to the stranger, and generous with what is mine. Amen.',
+      },
+      {
+        title: 'A Request for Covering',
+        scripture_reference: 'Ruth 3:9-13',
+        scripture_text:
+          'And he said, Who art thou? And she answered, I am Ruth thine handmaid: spread therefore thy skirt over thine handmaid; for thou art a near kinsman.\n\nAnd he said, Blessed be thou of the LORD, my daughter: for thou hast shewed more kindness in the latter end than at the beginning, inasmuch as thou followedst not young men, whether poor or rich. And now, my daughter, fear not; I will do to thee all that thou requirest: for all the city of my people doth know that thou art a virtuous woman. And now it is true that I am thy near kinsman: howbeit there is a kinsman nearer than I. Tarry this night, and it shall be in the morning, that if he will perform unto thee the part of a kinsman, well; let him do the kinsman’s part: but if he will not do the part of a kinsman to thee, then will I do the part of a kinsman to thee, as the LORD liveth: lie down until the morning.',
+        teaching:
+          'This is a strange scene to modern ears, and it is easy to misread. Naomi’s instructions to Ruth are not a romantic scheme; they are a legal appeal. Ruth asks Boaz to spread the corner of his garment over her — in Hebrew, the word is the same one used for the “wings” of the LORD in chapter two. She is asking him to become the answer to his own blessing.\n\nBoaz’s reply is careful and kind. He does not take advantage. He praises her for choosing covenant faithfulness over a younger man, calls her virtuous in public, and then immediately raises the complication: there is a nearer kinsman, and the law gives him first claim.\n\nThis is what the kinsman-redeemer is for: a relative who can buy back what was lost, at his own cost. Boaz will not shortcut the process. He names the cost, promises to settle it by morning, and refuses to leave her unprotected in the meantime.',
+        reflection_prompts: [
+          'What does Boaz’s care for Ruth’s reputation and safety reveal about integrity?',
+          'Where might you be tempted to take a shortcut that belongs to someone else?',
+          'What in your life needs to be covered, and who has God placed in reach to help you?',
+        ],
+        prayer:
+          'Jesus, you are the kinsman who came near at your own cost. Thank you for not leaving me uncovered. Teach me to do right slowly rather than quickly. Amen.',
+      },
+      {
+        title: 'The Redeemer Who Does Not Delay',
+        scripture_reference: 'Ruth 4:13-17',
+        scripture_text:
+          'So Boaz took Ruth, and she was his wife: and when he went in unto her, the LORD gave her conception, and she bare a son. And the women said unto Naomi, Blessed be the LORD, which hath not left thee this day without a kinsman, that his name may be famous in Israel. And he shall be unto thee a restorer of thy life, and a nourisher of thine old age: for thy daughter in law, which loveth thee, which is better to thee than seven sons, hath born him. And Naomi took the child, and laid it in her bosom, and became nurse unto it. And the women her neighbours gave it a name, saying, There is a son born to Naomi; and they called his name Obed: he is the father of Jesse, the father of David.',
+        teaching:
+          'Boaz settles the matter at the gate the next morning, in front of the elders, and the nearer kinsman steps aside. The book that began with a funeral ends with a birth announcement and a lap full of a baby. Naomi, who once asked to be called “bitter,” is named a nourisher of old age by the women of the town.\n\nLook at what the women say: the child will be a restorer, and Ruth has been better to Naomi than seven sons. In a culture that measured a woman’s worth in sons, that is a startling, generous sentence. God has not just patched Naomi’s story; he has filled it.\n\nThe last verses are a genealogy, and it runs straight to David, the king. Matthew’s gospel opens by repeating it, with Ruth’s name in it. A Moabite widow, working in someone else’s field, becomes great-grandmother to the line of Jesus. This is how God works in the quiet books: faithful love, a field, a night of waiting, and then a family tree that carries the whole world.',
+        reflection_prompts: [
+          'Where has God restored something you thought was finished?',
+          'How does Ruth’s place in the family line of Jesus encourage you?',
+          'What small faithfulness of yours might matter more than you can see right now?',
+        ],
+        prayer:
+          'God of Ruth and Naomi, you turn emptiness into a full lap and grief into a family tree. Keep me faithful in the quiet places. Amen.',
+      },
+    ],
+  },
+  {
+    study: {
+      slug: 'james',
+      title: 'James: Faith That Works',
+      summary:
+        'A plainspoken letter about trials, the tongue, and the kind of faith that shows up in what you actually do.',
+      category: 'New Testament',
+      level: 'Growing',
+      cover_image: `${IMG}/52e8f997a_generated_image.png`,
+      duration_label: 'About 12 minutes a lesson',
+      order: 7,
+    },
+    lessons: [
+      {
+        title: 'Joy in the Hard Places',
+        scripture_reference: 'James 1:2-8',
+        scripture_text:
+          'My brethren, count it all joy when ye fall into divers temptations; Knowing this, that the trying of your faith worketh patience. But let patience have her perfect work, that ye may be perfect and entire, wanting nothing. If any of you lack wisdom, let him ask of God, that giveth to all men liberally, and upbraideth not; and it shall be given him.\n\nBut let him ask in faith, nothing wavering. For he that wavereth is like a wave of the sea driven with the wind and tossed. For let not that man think that he shall receive any thing of the Lord. A double minded man is unstable in all his ways.',
+        teaching:
+          'James does not tell us to enjoy pain. He says to count it joy — a decision about meaning, not a feeling about suffering. The word he uses for testing is the one for refining metal: heat that reveals what is really there.\n\nThe logic is compact. Faith tested produces patience, and patience, given room to finish its work, produces a person who is whole and lacking nothing. Notice the sequence: James is not in a hurry. Patience is the gift hidden inside the thing you want removed.\n\nThen he pivots to a promise that is easy to skip past. If you lack wisdom — and the whole letter is about living wisely — ask. God gives generously and does not scold you for asking. The one condition is that we ask in faith, not hedging with a plan B in each hand. The double-minded person James describes is not a hypocrite; it is someone genuinely torn. If that is you this week, ask anyway. James says the giving has already been decided.',
+        reflection_prompts: [
+          'What trial is currently producing something in you, whether or not you would have chosen it?',
+          'Where do you most need wisdom right now? Name the situation plainly.',
+          'What would it mean for you to ask God for that wisdom without hedging?',
+        ],
+        prayer:
+          'Father, I would rather have the trial gone than have it teach me. Give me patience that finishes its work, and wisdom I actually believe you will give. Amen.',
+      },
+      {
+        title: 'Doers, Not Just Hearers',
+        scripture_reference: 'James 1:19-25',
+        scripture_text:
+          'Wherefore, my beloved brethren, let every man be swift to hear, slow to speak, slow to wrath: For the wrath of man worketh not the righteousness of God. Wherefore lay apart all filthiness and superfluity of naughtiness, and receive with meekness the engrafted word, which is able to save your souls.\n\nBut be ye doers of the word, and not hearers only, deceiving your own selves. For if any be a hearer of the word, and not a doer, he is like unto a man beholding his natural face in a glass: For he beholdeth himself, and goeth his way, and straightway forgetteth what manner of man he was. But whoso looketh into the perfect law of liberty, and continueth therein, he being not a forgetful hearer, but a doer of the work, this man shall be blessed in his deed.',
+        teaching:
+          'Three small instructions open this passage, and they are harder than they look: quick to listen, slow to speak, slow to get angry. James adds a reason — human anger does not produce God’s righteousness. However right the anger feels, it is seldom the tool God uses to make things right.\n\nThen comes his famous image. A person who hears the word and does nothing is like someone who glances in a mirror and forgets his own face by the time he reaches the door. The mirror was never the problem. The forgetting is.\n\nJames contrasts the glance with a long look: whoever keeps looking into the perfect law of liberty and continues in it is blessed in what he does. The word “continue” carries the weight. Doing the word is not a single heroic act; it is staying with it long enough for it to become the shape of your life. Small obedience repeated is the whole point.',
+        reflection_prompts: [
+          'Which is harder for you: being quick to listen, slow to speak, or slow to anger?',
+          'What have you heard from Scripture recently and not yet done?',
+          'What would “continuing” in one of those things look like this week?',
+        ],
+        prayer:
+          'Lord, I have heard plenty. Make me a doer, gently and steadily, and keep me looking long enough to be changed. Amen.',
+      },
+      {
+        title: 'Faith with Its Sleeves Rolled Up',
+        scripture_reference: 'James 2:14-20',
+        scripture_text:
+          'What doth it profit, my brethren, though a man say he hath faith, and have not works? can faith save him? If a brother or sister be naked, and destitute of daily food, And one of you say unto them, Depart in peace, be ye warmed and filled; notwithstanding ye give them not those things which are needful to the body; what doth it profit?\n\nEven so faith, if it hath not works, is dead, being alone. Yea, a man may say, Thou hast faith, and I have works: shew me thy faith without thy works, and I will shew thee my faith by my works. Thou believest that there is one God; thou doest well: the devils also believe, and tremble. But wilt thou know, O vain man, that faith without works is dead?',
+        teaching:
+          'James picks a case no one can argue with. Someone in the church has no coat and no dinner. You wish them well and send them on their way. The problem is not that your words are false; it is that they cost nothing and change nothing.\n\nHis sentence “faith, if it hath not works, is dead, being alone” has been argued about for centuries. Read alongside Paul, James is not saying we are saved by deeds. He is saying that a faith that never moves your hands is not faith you can see — and may not be faith at all. Paul insists works do not save us. James insists salvation works.\n\nThe sharpest line is about the demons. They believe in one God, and they shudder. Correct theology, no love. James is asking us to check whether our belief has ever made us get up and do something for someone else.',
+        reflection_prompts: [
+          'Where have you said “depart in peace” to someone whose need you could actually have met?',
+          'How would you describe the difference between earning salvation and living it out?',
+          'What is one concrete act of love within reach this week?',
+        ],
+        prayer:
+          'Jesus, keep me from a faith that is only words. Give me eyes for the need in front of me and hands willing to move. Amen.',
+      },
+      {
+        title: 'The Grace That Goes Lower',
+        scripture_reference: 'James 4:6-10',
+        scripture_text:
+          'But he giveth more grace. Wherefore he saith, God resisteth the proud, but giveth grace unto the humble. Submit yourselves therefore to God. Resist the devil, and he will flee from you. Draw nigh to God, and he will draw nigh to you. Cleanse your hands, ye sinners; and purify your hearts, ye double minded.\n\nBe afflicted, and mourn, and weep: let your laughter be turned to mourning, and your joy to heaviness. Humble yourselves in the sight of the Lord, and he shall lift you up.',
+        teaching:
+          'James has spent three chapters naming quarrels, favoritism, and a wandering tongue. Here he names the root: pride, the quiet belief that we would manage our lives better if God would step aside.\n\nThe remedy is a chain of verbs: submit, resist, draw near, cleanse, mourn, humble yourselves. None of them are passive. Humility in James is not thinking badly of yourself; it is agreeing with God about who he is and moving toward him.\n\nThe promise is double. God resists the proud, and he gives more grace. He does not give a little grace to the humble and then ration it; he gives more. And the last line turns everything around: humble yourself, and he will lift you up. The way down is the way up. That is the shape of the gospel, and James learned it from watching Jesus.',
+        reflection_prompts: [
+          'Where is pride currently making you resist God’s direction?',
+          'What would “drawing near” to God look like for you tomorrow morning?',
+          'Which of the verbs in this passage feels most needed in your life right now?',
+        ],
+        prayer:
+          'Lord, I would like to be lifted up without going lower. Teach me the humility that receives your grace. Amen.',
+      },
+    ],
+  },
+  {
+    study: {
+      slug: 'proverbs',
+      title: 'Proverbs: The Way of Wisdom',
+      summary:
+        'Short sayings, deep roots — learning to fear the LORD, guard the heart, and walk a straight path.',
+      category: 'Psalms & Wisdom',
+      level: 'Beginning',
+      cover_image: `${IMG}/5ff535637_generated_image.png`,
+      duration_label: 'About 12 minutes a lesson',
+      order: 8,
+    },
+    lessons: [
+      {
+        title: 'The Beginning of Knowledge',
+        scripture_reference: 'Proverbs 1:1-7',
+        scripture_text:
+          'The proverbs of Solomon the son of David, king of Israel; To know wisdom and instruction; to perceive the words of understanding; To receive the instruction of wisdom, justice, and judgment, and equity; To give subtilty to the simple, to the young man knowledge and discretion.\n\nA wise man will hear, and will increase learning; and a man of understanding shall attain unto wise counsels: To understand a proverb, and the interpretation; the words of the wise, and their dark sayings. The fear of the LORD is the beginning of knowledge: but fools despise wisdom and instruction.',
+        teaching:
+          'Proverbs opens with a purpose statement and a table of contents. This book is for learning — wisdom, instruction, understanding, justice, judgment, equity. The word for wisdom in Hebrew is closer to skill than to intelligence: the craft of living well, the way a carpenter is wise with wood.\n\nNotice who it is for. The simple, the young, and then the wise man who will increase in learning. Nobody graduates out of this book. The only people excluded are the ones who refuse instruction.\n\nAnd then the sentence the whole book rests on: the fear of the LORD is the beginning of knowledge. Not the end of it — the beginning. Reverence for God is the ground floor, the place you start before any of the proverbs make sense. Wisdom here is not a collection of tips for a good life. It is a relationship with the one who made the life.',
+        reflection_prompts: [
+          'What does it mean to you to fear the LORD, in plain words?',
+          'Where do you consider yourself teachable, and where do you resist instruction?',
+          'Which area of life most needs the skill of wisdom right now?',
+        ],
+        prayer:
+          'Lord, teach me to fear you first, and then to live well. Make me teachable even where I feel confident. Amen.',
+      },
+      {
+        title: 'Trusting With All Your Heart',
+        scripture_reference: 'Proverbs 3:1-8',
+        scripture_text:
+          'My son, forget not my law; but let thine heart keep my commandments: For length of days, and long life, and peace, shall they add to thee. Let not mercy and truth forsake thee: bind them about thy neck; write them upon the table of thine heart: So shalt thou find favour and good understanding in the sight of God and man.\n\nTrust in the LORD with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths. Be not wise in thine own eyes: fear the LORD, and depart from evil. It shall be health to thy navel, and marrow to thy bones.',
+        teaching:
+          'This is one of the best-loved passages in the Old Testament, and it is built on a contrast: trust with all your heart, and do not lean on your own understanding. The picture is of someone putting their weight on something. Understanding is a good thing — Proverbs is full of it — but it is a poor thing to lean your whole body against.\n\nThe instruction in the middle is the hinge: in all thy ways acknowledge him. Not in the big decisions only. In the ordinary ones, the ones you would never think to pray about, which may be exactly the ones shaping you most.\n\nThe promise is not that you will understand the path. It is that he will direct it — make it straight, keep it true. And the result of that posture, James-like, is health: marrow to your bones. A life that stops gripping its own understanding tends to get well.',
+        reflection_prompts: [
+          'What are you currently leaning on instead of trusting God?',
+          'Which ordinary parts of your day have you never thought to acknowledge him in?',
+          'What would change if you expected guidance rather than an explanation?',
+        ],
+        prayer:
+          'Father, I have leaned hard on my own understanding. Teach me the lighter weight of trusting you in all my ways. Amen.',
+      },
+      {
+        title: 'Guarding the Heart',
+        scripture_reference: 'Proverbs 4:20-27',
+        scripture_text:
+          'My son, attend to my words; incline thine ear unto my sayings. Let them not depart from thine eyes; keep them in the midst of thine heart. For they are life unto those that find them, and health to all their flesh.\n\nKeep thy heart with all diligence; for out of it are the issues of life. Put away from thee a froward mouth, and perverse lips put far from thee. Let thine eyes look right on, and let thine eyelids look straight before thee. Ponder the path of thy feet, and let all thy ways be established. Turn not to the right hand nor to the left: remove thy foot from evil.',
+        teaching:
+          'The instruction begins with attention: incline your ear, do not let the words out of your sight, keep them in the middle of your heart. Then the famous line: keep thy heart with all diligence, for out of it are the issues of life.\n\nThe word for “keep” is a guard’s word, the same one used for posting a sentry. The heart here is not the sentimental center but the wellspring — the place your choices actually come from. Guard the spring and the stream stays clean.\n\nWhat follows describes that guarding in practical terms: mouth, eyes, feet. No crooked speech. Eyes looking straight ahead rather than wandering. Feet that consider the path before walking it. It is a whole-body picture of a person who knows that small daily decisions carry the water of a whole life.',
+        reflection_prompts: [
+          'What tends to get past the guard and reach your heart these days?',
+          'Which of the three — mouth, eyes, or feet — needs the most attention in your life?',
+          'What is one guard you could put in place this week?',
+        ],
+        prayer:
+          'Jesus, you said the mouth speaks from the overflow of the heart. Guard the spring in me, and let what flows out be life. Amen.',
+      },
+      {
+        title: 'Committing Your Works',
+        scripture_reference: 'Proverbs 16:1-9',
+        scripture_text:
+          'The preparations of the heart in man, and the answer of the tongue, is from the LORD. All the ways of a man are clean in his own eyes; but the LORD weigheth the spirits. Commit thy works unto the LORD, and thy thoughts shall be established.\n\nEvery one that is proud in heart is an abomination to the LORD: though hand join in hand, he shall not be unpunished. By mercy and truth iniquity is purged: and by the fear of the LORD men depart from evil. When a man’s ways please the LORD, he maketh even his enemies to be at peace with him. Better is a little with righteousness than great revenues without right. A man’s heart deviseth his way: but the LORD directeth his steps.',
+        teaching:
+          'Proverbs 16 is full of the sovereignty of God, stated in small, unarguable sentences. We plan our answer; the LORD gives the tongue. Our ways look clean to us; the LORD weighs the spirit behind them. We devise our way; he directs our steps.\n\nIn the middle sits a promise worth memorizing: commit thy works unto the LORD, and thy thoughts shall be established. The word for commit means to roll your burden onto someone else. It is not a technique for getting your plans approved; it is a transfer of weight. Set your work into his hands and your plans stop rattling.\n\nThe chapter closes the loop. Better is a little with righteousness than great revenues without right. And then the sentence that holds the whole book together: a man’s heart deviseth his way, but the LORD directeth his steps. Plan carefully. Then hold the plan loosely, because you are not the one directing.',
+        reflection_prompts: [
+          'What work or decision do you need to roll onto God this week?',
+          'Where has your own way looked clean to you, and why might God weigh it differently?',
+          'What would it look like to plan well and still hold your plan loosely?',
+        ],
+        prayer:
+          'Lord, I will keep making plans, and I will keep handing them to you. Direct my steps, and establish my thoughts. Amen.',
+      },
+    ],
+  },
 ];
