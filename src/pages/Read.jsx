@@ -7,6 +7,7 @@ import ChapterReader from '@/components/bible/ChapterReader';
 import BookPicker from '@/components/bible/BookPicker';
 
 const TRANSLATIONS = [
+  { id: 'nlt', label: 'New Living Translation' },
   { id: 'kjv', label: 'King James Version' },
   { id: 'web', label: 'World English Bible' },
   { id: 'asv', label: 'American Standard Version' },
@@ -164,6 +165,14 @@ export default function Read() {
           loading={loading}
           error={error}
         />
+
+        {translation === 'nlt' && !loading && !error && (
+          <p className="mt-8 border-t border-border/70 pt-4 text-[11.5px] leading-relaxed text-muted-foreground">
+            Scripture quotations marked NLT are taken from the Holy Bible, New Living
+            Translation, copyright © 1996, 2004, 2015 by Tyndale House Foundation. Used by
+            permission of Tyndale House Publishers. All rights reserved.
+          </p>
+        )}
       </div>
 
       <div className="mt-10 grid gap-4 sm:grid-cols-2">
