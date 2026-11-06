@@ -1,0 +1,55 @@
+{
+  "name": "Lesson",
+  "type": "object",
+  "properties": {
+    "study_id": {
+      "type": "string"
+    },
+    "order": {
+      "type": "number"
+    },
+    "title": {
+      "type": "string"
+    },
+    "scripture_reference": {
+      "type": "string"
+    },
+    "scripture_text": {
+      "type": "string"
+    },
+    "teaching": {
+      "type": "string"
+    },
+    "reflection_prompts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "prayer": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "study_id",
+    "title"
+  ],
+  "rls": {
+    "read": {},
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

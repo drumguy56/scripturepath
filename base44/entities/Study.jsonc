@@ -1,0 +1,77 @@
+{
+  "name": "Study",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Old Testament",
+        "New Testament",
+        "Psalms & Wisdom",
+        "Foundations"
+      ],
+      "enumColors": [
+        "blue",
+        "green",
+        "purple",
+        "yellow"
+      ]
+    },
+    "level": {
+      "type": "string",
+      "enum": [
+        "Beginning",
+        "Growing",
+        "Deep"
+      ],
+      "enumColors": [
+        "green",
+        "yellow",
+        "red"
+      ]
+    },
+    "cover_image": {
+      "type": "string"
+    },
+    "duration_label": {
+      "type": "string"
+    },
+    "lesson_count": {
+      "type": "number"
+    },
+    "order": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "title",
+    "slug"
+  ],
+  "rls": {
+    "read": {},
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

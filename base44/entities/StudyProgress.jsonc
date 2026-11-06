@@ -1,0 +1,41 @@
+{
+  "name": "StudyProgress",
+  "type": "object",
+  "properties": {
+    "study_id": {
+      "type": "string"
+    },
+    "study_title": {
+      "type": "string"
+    },
+    "completed_lesson_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "last_lesson_id": {
+      "type": "string"
+    },
+    "last_active": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "study_id"
+  ],
+  "rls": {
+    "read": {
+      "created_by_id": "{{user.id}}"
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "created_by_id": "{{user.id}}"
+    }
+  }
+}
