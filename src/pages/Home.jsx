@@ -28,21 +28,24 @@ export default function Home() {
   const [continueStudy, setContinueStudy] = useState(null);
   const [nextLesson, setNextLesson] = useState(null);
   const [reflectionCount, setReflectionCount] = useState(0);
+  const [memberCount, setMemberCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let active = true;
     (async () => {
       try {
-        const [studyPage, progressPage, reflections] = await Promise.all([
+        const [studyPage, progressPage, reflections, stats] = await Promise.all([
           base44.entities.Study.list({ sort: 'order', limit: 50 }),
           base44.entities.StudyProgress.list({ sort: '-last_active', limit: 20 }),
           base44.entities.JournalEntry.count(),
+          base44.functions.invoke('communityStats').catch(() => null),
         ]);
         if (!active) return;
         setStudies(studyPage.items);
         setProgressList(progressPage.items);
         setReflectionCount(reflections);
+        setMemberCount(stats?.data?.members || 0);
 
         const latest = progressPage.items[0];
         if (latest) {
@@ -105,9 +108,10 @@ export default function Home() {
           />
         )}
 
-        {!loading && progressList.length > 0 && (
-          <div className="mt-8 grid grid-cols-3 divide-x divide-border/80 border-y border-border/80 py-6">
+        {!loading && (
+          <div className="mt-8 grid grid-cols-2 gap-y-6 border-y border-border/80 py-6 sm:grid-cols-4 sm:gap-y-0 sm:divide-x sm:divide-border/80">
             {[
+              { value: memberCount, label: 'Readers in the app' },
               { value: lessonsFinished, label: 'Lessons finished' },
               { value: reflectionCount, label: 'Reflections written' },
               { value: progressList.length, label: 'Studies begun' },
