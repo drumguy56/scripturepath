@@ -18,6 +18,7 @@ import Library from '@/pages/Library';
 import StudyDetail from '@/pages/StudyDetail';
 import Lesson from '@/pages/Lesson';
 import Journal from '@/pages/Journal';
+import Read from '@/pages/Read';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -58,6 +59,8 @@ const AuthenticatedApp = () => {
           <Route path="/study/:studyId" element={<StudyDetail />} />
           <Route path="/study/:studyId/lesson/:lessonId" element={<Lesson />} />
           <Route path="/journal" element={<Journal />} />
+          <Route path="/read" element={<Read />} />
+          <Route path="/read/:bookSlug/:chapter" element={<Read />} />
         </Route>
       </Route>
 

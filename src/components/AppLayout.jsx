@@ -8,6 +8,7 @@ const LOGO =
 
 const LINKS = [
   { to: '/', label: 'Today' },
+  { to: '/read', label: 'Bible' },
   { to: '/library', label: 'Studies' },
   { to: '/journal', label: 'Journal' },
 ];
