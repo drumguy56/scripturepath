@@ -58,7 +58,7 @@ export default function Login() {
           Don't have an account?{" "}
           <Link
             to={"/register" + (returnTo !== "/" ? "?returnTo=" + encodeURIComponent(returnTo) : "")}
-            className="text-primary font-medium hover:underline"
+            className="font-medium text-foreground underline decoration-primary/60 underline-offset-4 hover:decoration-primary"
           >
             Create one
           </Link>
@@ -67,7 +67,7 @@ export default function Login() {
     >
       <Button
         variant="outline"
-        className="w-full h-12 text-sm font-medium mb-6"
+        className="w-full h-11 rounded-full border-border bg-transparent text-[13.5px] font-medium hover:bg-secondary hover:text-foreground mb-6"
         onClick={handleGoogle}
       >
         <GoogleIcon className="w-5 h-5 mr-2" />
@@ -84,7 +84,7 @@ export default function Login() {
       </div>
 
       {error && (
-        <div className="mb-4 p-3 rounded-lg bg-destructive/10 text-destructive text-sm">
+        <div className="mb-4 px-3 py-2.5 rounded-[8px] border border-destructive/25 bg-destructive/10 text-destructive text-[13px]">
           {error}
         </div>
       )}
@@ -102,7 +102,7 @@ export default function Login() {
               placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="pl-10 h-12"
+              className="pl-10 h-11 rounded-[8px] border-border bg-background/40"
               required
             />
           </div>
@@ -110,7 +110,10 @@ export default function Login() {
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <Label htmlFor="password">Password</Label>
-            <Link to="/forgot-password" className="text-xs text-primary hover:underline">
+            <Link
+              to="/forgot-password"
+              className="text-[11.5px] uppercase tracking-[0.12em] text-muted-foreground transition-colors hover:text-foreground"
+            >
               Forgot password?
             </Link>
           </div>
@@ -123,12 +126,16 @@ export default function Login() {
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="pl-10 h-12"
+              className="pl-10 h-11 rounded-[8px] border-border bg-background/40"
               required
             />
           </div>
         </div>
-        <Button type="submit" className="w-full h-12 font-medium" disabled={loading}>
+        <Button
+          type="submit"
+          className="w-full h-11 rounded-full bg-foreground text-background text-[13px] font-medium tracking-[0.02em] hover:bg-foreground/90"
+          disabled={loading}
+        >
           {loading ? (
             <>
               <Loader2 className="w-4 h-4 mr-2 animate-spin" />

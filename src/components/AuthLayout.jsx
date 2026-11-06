@@ -29,7 +29,7 @@ export default function AuthLayout({ icon: Icon, title, subtitle, footer, childr
                 <span className="eyebrow">Guided Bible study</span>
               </div>
 
-              <h1 className="mt-5 font-heading text-[clamp(1.85rem,4vw,2.35rem)] leading-[1.15] text-foreground">
+              <h1 className="glow-heading mt-5 font-heading text-[clamp(1.85rem,4vw,2.35rem)] leading-[1.15] text-foreground">
                 {title}
               </h1>
               {subtitle && (
@@ -38,7 +38,7 @@ export default function AuthLayout({ icon: Icon, title, subtitle, footer, childr
                 </p>
               )}
 
-              <div className="mt-7 rounded-[14px] border border-border/80 bg-card p-6 sm:p-7">
+              <div className="glow-panel mt-7 rounded-[14px] border border-border/80 bg-card p-6 sm:p-7">
                 {children}
               </div>
 
@@ -48,7 +48,7 @@ export default function AuthLayout({ icon: Icon, title, subtitle, footer, childr
         </div>
 
         <aside className="hidden flex-col justify-center border-l border-border/70 bg-secondary/40 px-10 lg:flex">
-          <p className="font-heading text-[24px] leading-[1.45] text-foreground/90">
+          <p className="glow-heading font-heading text-[24px] leading-[1.45] text-foreground/90">
             “Thy word is a lamp unto my feet, and a light unto my path.”
           </p>
           <p className="mt-4 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">

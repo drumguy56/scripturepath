@@ -119,6 +119,15 @@
   .hairline {
     @apply border-t border-border/80;
   }
+
+  .glow-heading {
+    text-shadow: 0 0 24px hsl(var(--foreground) / 0.5), 0 0 58px hsl(var(--foreground) / 0.22);
+  }
+
+  .glow-panel {
+    box-shadow: 0 0 0 1px hsl(var(--foreground) / 0.08),
+      0 0 70px -26px hsl(var(--foreground) / 0.6);
+  }
 }
 
 @keyframes slow-tint {
