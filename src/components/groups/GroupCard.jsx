@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Users } from 'lucide-react';
 
 export default function GroupCard({ group }) {
   const count = group.member_profiles?.length || group.members?.length || 0;
@@ -15,9 +16,12 @@ export default function GroupCard({ group }) {
           {group.description}
         </p>
       )}
-      <p className="mt-4 text-[11.5px] uppercase tracking-[0.12em] text-muted-foreground">
-        {count} {count === 1 ? 'member' : 'members'}
-      </p>
+      <div className="mt-4 flex items-center gap-4 text-[12.5px] text-muted-foreground">
+        <span className="inline-flex items-center gap-1.5">
+          <Users className="h-3.5 w-3.5" aria-hidden="true" />
+          {count} {count === 1 ? 'member' : 'members'}
+        </span>
+      </div>
     </Link>
   );
 }
