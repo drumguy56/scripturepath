@@ -19,6 +19,8 @@ import StudyDetail from '@/pages/StudyDetail';
 import Lesson from '@/pages/Lesson';
 import Journal from '@/pages/Journal';
 import Read from '@/pages/Read';
+import Groups from '@/pages/Groups';
+import GroupDetail from '@/pages/GroupDetail';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -61,6 +63,8 @@ const AuthenticatedApp = () => {
           <Route path="/journal" element={<Journal />} />
           <Route path="/read" element={<Read />} />
           <Route path="/read/:bookSlug/:chapter" element={<Read />} />
+          <Route path="/groups" element={<Groups />} />
+          <Route path="/groups/:groupId" element={<GroupDetail />} />
         </Route>
       </Route>
 
