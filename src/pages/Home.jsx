@@ -78,11 +78,11 @@ export default function Home() {
 
   return (
     <>
-      <Hero />
-
-      <section className="mx-auto max-w-[1180px] px-5 pt-12 sm:px-8 md:pt-14">
+      <section className="mx-auto max-w-[1180px] px-5 pt-6 sm:px-8 sm:pt-8">
         <VerseOfTheDay />
       </section>
+
+      <Hero />
 
       <section className="mx-auto max-w-[1180px] px-5 pt-16 sm:px-8 md:pt-20">
         <div className="mb-6 flex items-end justify-between gap-6">
