@@ -12,9 +12,6 @@ const initials = (name = '') =>
 export default function GroupCard({ group }) {
   const profiles = group.member_profiles || [];
   const count = profiles.length || group.members?.length || 0;
-  const names = profiles.map((profile) => profile.name).filter(Boolean);
-  const shown = names.slice(0, 3);
-  const extra = names.length - shown.length;
 
   return (
     <Link
@@ -29,32 +26,31 @@ export default function GroupCard({ group }) {
         </p>
       )}
 
-      <div className="mt-4 flex items-center gap-3 border-t border-border/60 pt-3">
-        {profiles.length > 0 && (
-          <div className="flex shrink-0 -space-x-2">
-            {profiles.slice(0, 4).map((profile) => (
-              <span
+      <div className="mt-4 border-t border-border/60 pt-3">
+        <p className="flex items-center gap-1.5 text-[11px] uppercase tracking-[0.1em] text-muted-foreground">
+          <Users className="h-3 w-3" aria-hidden="true" />
+          {count} {count === 1 ? 'member' : 'members'}
+        </p>
+
+        {profiles.length > 0 ? (
+          <ul className="mt-3 flex flex-wrap gap-1.5">
+            {profiles.map((profile) => (
+              <li
                 key={profile.user_id}
-                className="grid h-7 w-7 place-items-center rounded-full border border-border bg-secondary text-[10px] font-medium uppercase text-foreground/80"
+                className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-secondary/60 py-1 pl-1 pr-2.5 text-[12px] text-foreground/85"
               >
-                {initials(profile.name)}
-              </span>
+                <span className="grid h-5 w-5 place-items-center rounded-full bg-foreground/10 text-[9px] font-medium uppercase">
+                  {initials(profile.name)}
+                </span>
+                {profile.name}
+              </li>
             ))}
-          </div>
+          </ul>
+        ) : (
+          <p className="mt-2 text-[12px] text-muted-foreground">
+            {count === 0 ? 'No members yet' : 'Members have not shared their names'}
+          </p>
         )}
-        <div className="min-w-0">
-          <p className="truncate text-[12.5px] leading-tight text-foreground/80">
-            {shown.length > 0
-              ? `${shown.join(', ')}${extra > 0 ? ` +${extra}` : ''}`
-              : count === 0
-                ? 'No members yet'
-                : null}
-          </p>
-          <p className="mt-1 flex items-center gap-1.5 text-[11px] uppercase tracking-[0.1em] text-muted-foreground">
-            <Users className="h-3 w-3" aria-hidden="true" />
-            {count} {count === 1 ? 'member' : 'members'}
-          </p>
-        </div>
       </div>
     </Link>
   );
