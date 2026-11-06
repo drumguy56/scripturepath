@@ -12,6 +12,8 @@ const TRANSLATIONS = [
   { id: 'web', label: 'World English Bible' },
   { id: 'asv', label: 'American Standard Version' },
   { id: 'bbe', label: 'Bible in Basic English' },
+  { id: 'ylt', label: "Young's Literal Translation (NT)" },
+  { id: 'darby', label: 'Darby Translation' },
 ];
 
 const STORE_KEY = 'scripturepath:last-read';
