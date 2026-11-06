@@ -92,7 +92,7 @@ export default function Register() {
         subtitle={`We sent a code to ${email}`}
       >
         {error && (
-          <div className="mb-4 p-3 rounded-lg bg-destructive/10 text-destructive text-sm">
+          <div className="mb-4 px-3 py-2.5 rounded-[8px] border border-destructive/25 bg-destructive/10 text-destructive text-[13px]">
             {error}
           </div>
         )}
@@ -115,7 +115,7 @@ export default function Register() {
           </InputOTP>
         </div>
         <Button
-          className="w-full h-12 font-medium"
+          className="w-full h-11 rounded-full bg-foreground text-background text-[13px] font-medium tracking-[0.02em] hover:bg-foreground/90"
           onClick={handleVerify}
           disabled={loading || otpCode.length < 6}
         >
@@ -148,7 +148,7 @@ export default function Register() {
           Already have an account?{" "}
           <Link
             to={loginPath}
-            className="text-primary font-medium hover:underline"
+            className="font-medium text-foreground underline decoration-primary/60 underline-offset-4 hover:decoration-primary"
           >
             Log in
           </Link>
@@ -157,7 +157,7 @@ export default function Register() {
     >
       <Button
         variant="outline"
-        className="w-full h-12 text-sm font-medium mb-6"
+        className="w-full h-11 rounded-full border-border bg-transparent text-[13.5px] font-medium hover:bg-secondary hover:text-foreground mb-6"
         onClick={handleGoogle}
       >
         <GoogleIcon className="w-5 h-5 mr-2" />
@@ -174,7 +174,7 @@ export default function Register() {
       </div>
 
       {error && (
-        <div className="mb-4 p-3 rounded-lg bg-destructive/10 text-destructive text-sm">
+        <div className="mb-4 px-3 py-2.5 rounded-[8px] border border-destructive/25 bg-destructive/10 text-destructive text-[13px]">
           {error}
         </div>
       )}
@@ -192,7 +192,7 @@ export default function Register() {
               placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="pl-10 h-12"
+              className="pl-10 h-11 rounded-[8px] border-border bg-background/40"
               required
             />
           </div>
@@ -208,7 +208,7 @@ export default function Register() {
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="pl-10 h-12"
+              className="pl-10 h-11 rounded-[8px] border-border bg-background/40"
               required
             />
           </div>
@@ -224,12 +224,16 @@ export default function Register() {
               placeholder="••••••••"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="pl-10 h-12"
+              className="pl-10 h-11 rounded-[8px] border-border bg-background/40"
               required
             />
           </div>
         </div>
-        <Button type="submit" className="w-full h-12 font-medium" disabled={loading}>
+        <Button
+          type="submit"
+          className="w-full h-11 rounded-full bg-foreground text-background text-[13px] font-medium tracking-[0.02em] hover:bg-foreground/90"
+          disabled={loading}
+        >
           {loading ? (
             <>
               <Loader2 className="w-4 h-4 mr-2 animate-spin" />
