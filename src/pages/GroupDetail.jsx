@@ -7,6 +7,7 @@ import InvitePanel from '@/components/groups/InvitePanel';
 import MemberList from '@/components/groups/MemberList';
 import GroupSessions from '@/components/groups/GroupSessions';
 import MemberProgress from '@/components/groups/MemberProgress';
+import GroupChat from '@/components/groups/GroupChat';
 
 export default function GroupDetail() {
   const { groupId } = useParams();
@@ -156,6 +157,12 @@ export default function GroupDetail() {
           />
         </div>
       </div>
+
+      <GroupChat
+        group={group}
+        people={members || group.member_profiles || []}
+        user={user}
+      />
 
       <GroupSessions group={group} isOwner={isOwner} />
     </div>

@@ -1,0 +1,46 @@
+{
+  "name": "GroupMessage",
+  "type": "object",
+  "properties": {
+    "group_id": {
+      "type": "string"
+    },
+    "body": {
+      "type": "string"
+    },
+    "author_id": {
+      "type": "string"
+    },
+    "author_name": {
+      "type": "string"
+    },
+    "members": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "group_id",
+    "body"
+  ],
+  "rls": {
+    "read": {
+      "data.members": "{{user.id}}"
+    },
+    "create": {
+      "data.members": {
+        "$in": [
+          "{{user.id}}"
+        ]
+      }
+    },
+    "update": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "created_by_id": "{{user.id}}"
+    }
+  }
+}
