@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import Hero from '@/components/Hero';
 import VerseOfTheDay from '@/components/VerseOfTheDay';
 import WeatherCard from '@/components/WeatherCard';
+import ReadPassageCard from '@/components/ReadPassageCard';
 import StudyCard from '@/components/StudyCard';
 import ContinueStudyCard from '@/components/ContinueStudyCard';
 import { base44 } from '@/api/base44Client';
@@ -127,6 +128,10 @@ export default function Home() {
             ))}
           </div>
         )}
+      </section>
+
+      <section className="mx-auto max-w-[1180px] px-5 pt-20 sm:px-8">
+        <ReadPassageCard />
       </section>
 
       <section className="mx-auto max-w-[1180px] px-5 pt-20 sm:px-8">
