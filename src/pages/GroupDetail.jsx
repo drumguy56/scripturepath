@@ -6,6 +6,7 @@ import { useAuth } from '@/lib/AuthContext';
 import InvitePanel from '@/components/groups/InvitePanel';
 import MemberList from '@/components/groups/MemberList';
 import GroupSessions from '@/components/groups/GroupSessions';
+import MemberProgress from '@/components/groups/MemberProgress';
 
 export default function GroupDetail() {
   const { groupId } = useParams();
@@ -148,6 +149,11 @@ export default function GroupDetail() {
               ownerId={group.created_by_id}
             />
           </div>
+          <MemberProgress
+            groupId={group.id}
+            members={members || group.member_profiles || []}
+            ownerId={group.created_by_id}
+          />
         </div>
       </div>
 
