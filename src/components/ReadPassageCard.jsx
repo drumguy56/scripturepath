@@ -67,7 +67,7 @@ export default function ReadPassageCard() {
           <button
             type="button"
             onClick={open}
-            className="group inline-flex h-[42px] items-center gap-2 rounded-[4px] bg-primary px-5 text-[12.5px] font-medium uppercase tracking-[0.14em] text-primary-foreground transition-colors hover:bg-foreground"
+            className="group inline-flex h-[42px] items-center gap-2 rounded-[4px] bg-primary px-5 text-[12.5px] font-medium uppercase tracking-[0.14em] text-foreground transition-colors hover:bg-primary/90"
           >
             Read {book.name} {chapter}
             <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-[2px]" />
