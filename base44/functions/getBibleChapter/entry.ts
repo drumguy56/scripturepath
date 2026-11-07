@@ -34,7 +34,24 @@ const BOOK_NUMBERS = new Map(
   ].map((name, index) => [name, index + 1])
 );
 
-const ALL_TRANSLATIONS = [...PUBLIC_TRANSLATIONS, 'nlt', ...Object.keys(BOLLS_TRANSLATIONS)];
+const ALL_TRANSLATIONS = [
+  ...PUBLIC_TRANSLATIONS,
+  'nlt',
+  'niv',
+  ...Object.keys(BOLLS_TRANSLATIONS),
+];
+
+// USX book codes, in the same order as BOOK_NUMBERS below (used by API.Bible).
+const NIV_OSIS = [
+  'GEN', 'EXO', 'LEV', 'NUM', 'DEU', 'JOS', 'JDG', 'RUT', '1SA', '2SA', '1KI', '2KI',
+  '1CH', '2CH', 'EZR', 'NEH', 'EST', 'JOB', 'PSA', 'PRO', 'ECC', 'SNG', 'ISA', 'JER',
+  'LAM', 'EZK', 'DAN', 'HOS', 'JOL', 'AMO', 'OBA', 'JON', 'MIC', 'NAM', 'HAB', 'ZEP',
+  'HAG', 'ZEC', 'MAL', 'MAT', 'MRK', 'LUK', 'JHN', 'ACT', 'ROM', '1CO', '2CO', 'GAL',
+  'EPH', 'PHP', 'COL', '1TH', '2TH', '1TI', '2TI', 'TIT', 'PHM', 'HEB', 'JAS', '1PE',
+  '2PE', '1JN', '2JN', '3JN', 'JUD', 'REV',
+];
+
+let nivBibleId = null;
 
 const NLT_BOOK_ALIASES = {
   'Song of Solomon': 'Song of Songs',
