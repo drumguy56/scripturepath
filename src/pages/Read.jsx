@@ -182,6 +182,7 @@ export default function Read() {
           verses={verses}
           loading={loading}
           error={error}
+          translationLabel={TRANSLATIONS.find((item) => item.id === translation)?.label}
         />
 
         {translation === 'niv' && !loading && !error && (
