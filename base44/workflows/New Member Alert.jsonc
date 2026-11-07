@@ -1,0 +1,45 @@
+{
+  "name": "New Member Alert",
+  "description": "Emails the app admin whenever a new member signs up for ScripturePath.",
+  "trigger": {
+    "config": {
+      "trigger_type": "app_user_auth",
+      "events": [
+        "signup"
+      ]
+    },
+    "condition": "${ .trigger.email != \"daranharroff@gmail.com\" }"
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "new_member_alert",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "notify_admin": {
+          "call": "send_email",
+          "with": {
+            "template_name": "NewMemberAlert",
+            "to": "daranharroff@gmail.com",
+            "description": "Tells the admin that a new member joined, with their name, email and sign-up method.",
+            "variables": {
+              "first_name": "${ .trigger.full_name // .trigger.email }",
+              "email": "${ .trigger.email }",
+              "auth_method": "${ .trigger.auth_method }",
+              "joined_at": "${ .trigger.occurred_at }"
+            },
+            "category": "transactional"
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Email the admin",
+            "description": "New signup details"
+          }
+        }
+      }
+    ]
+  }
+}

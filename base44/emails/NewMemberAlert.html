@@ -1,0 +1,51 @@
+<mjml>
+  <mj-head>
+    <mj-title>New member on ScripturePath</mj-title>
+    <mj-preview>{{first_name}} just joined ScripturePath</mj-preview>
+    <mj-attributes>
+      <mj-all font-family="'Roboto', Arial, sans-serif" />
+      <mj-section background-color="#1a1714" padding="0 36px" />
+      <mj-text color="#47c2ff" font-size="15px" line-height="1.6" padding="0" />
+      <mj-button background-color="#934225" color="#fbf8f4" border-radius="24px" font-weight="700" inner-padding="14px 28px" align="left" />
+      <mj-class name="h" font-weight="700" color="#fbf8f4" />
+    </mj-attributes>
+  </mj-head>
+  <mj-body background-color="#1a1714">
+    <mj-section background-color="#934225" padding="24px 36px">
+      <mj-column>
+        <mj-image src="https://media.base44.com/images/public/6aee56731f3f58a24e730082/1bd5a65fe_logo.png" alt="ScripturePath" width="44px" align="left" padding="0 0 10px 0" />
+        <mj-text color="#fbf8f4" font-size="18px" font-weight="700" letter-spacing="0.04em" padding="0">ScripturePath</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section padding="40px 36px 8px">
+      <mj-column>
+        <mj-text mj-class="h" font-size="30px" line-height="1.2">A new member just joined</mj-text>
+        <mj-text color="#45bcf7" font-size="16px" padding="12px 0 0 0">{{first_name}} created an account and can now begin a study.</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#241f1b" border-radius="24px" padding="28px 36px" css-class="card">
+      <mj-column>
+        <mj-text font-size="11px" color="#45bcf7" letter-spacing="0.16em" text-transform="uppercase" padding="0 0 4px 0">Name</mj-text>
+        <mj-text color="#fbf8f4" font-size="16px" padding="0 0 18px 0">{{first_name}}</mj-text>
+
+        <mj-text font-size="11px" color="#45bcf7" letter-spacing="0.16em" text-transform="uppercase" padding="0 0 4px 0">Email</mj-text>
+        <mj-text color="#fbf8f4" font-size="16px" padding="0 0 18px 0">{{email}}</mj-text>
+
+        <mj-text font-size="11px" color="#45bcf7" letter-spacing="0.16em" text-transform="uppercase" padding="0 0 4px 0">Signed up with</mj-text>
+        <mj-text color="#fbf8f4" font-size="16px" padding="0 0 18px 0">{{auth_method}}</mj-text>
+
+        <mj-text font-size="11px" color="#45bcf7" letter-spacing="0.16em" text-transform="uppercase" padding="0 0 4px 0">Date</mj-text>
+        <mj-text color="#fbf8f4" font-size="16px" padding="0">{{joined_at}}</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section padding="32px 36px 40px">
+      <mj-column>
+        <mj-button href="https://scripturepathstudio.com">Open ScripturePath</mj-button>
+        <mj-text color="#45bcf7" font-size="13px" padding="20px 0 0 0">You receive this note because you are an admin of ScripturePath.</mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
