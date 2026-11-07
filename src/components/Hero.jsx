@@ -55,16 +55,23 @@ export default function Hero() {
           <motion.div {...rise(0.28)}>
             <Link
               to="/library"
-              className="group mt-8 inline-flex h-[42px] items-stretch overflow-hidden rounded-[4px] border border-foreground/80 bg-primary text-primary-foreground transition-colors duration-300 hover:bg-foreground"
+              className="group relative mt-9 inline-flex items-center gap-3 overflow-hidden rounded-full bg-primary py-2 pl-6 pr-2 text-primary-foreground shadow-[0_16px_38px_-16px_hsl(var(--primary)/0.8)] ring-1 ring-[hsl(var(--primary)/0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_26px_58px_-18px_hsl(var(--primary)/0.9)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
-              <span className="flex items-center px-5 text-[13px] font-medium uppercase tracking-[0.14em]">
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-y-0 -left-full w-full bg-[linear-gradient(100deg,transparent,hsl(var(--primary-foreground)/0.32),transparent)] transition-all duration-[900ms] ease-out group-hover:left-full"
+              />
+              <span className="relative text-[13px] font-medium uppercase tracking-[0.14em]">
                 Browse the studies
               </span>
-              <span className="w-px self-stretch bg-primary-foreground/40" aria-hidden="true" />
-              <span className="grid w-[42px] place-items-center">
-                <svg viewBox="0 0 17.4 17.4" fill="none" className="h-[16px] w-[16px] transition-transform duration-300 group-hover:translate-x-0.5">
-                  <path d="M11.35 1.52 14.1 4.68c1.87 2.15 1.87 5.63 0 7.78l-2.75 3.16" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-                  <path d="M15.5 8.63H1.07" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+              <span className="relative grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[hsl(var(--primary-foreground)/0.16)] transition-all duration-300 group-hover:bg-primary-foreground group-hover:text-primary">
+                <svg
+                  viewBox="0 0 17.4 17.4"
+                  fill="none"
+                  className="h-[15px] w-[15px] transition-transform duration-300 group-hover:translate-x-[2px]"
+                >
+                  <path d="M11.35 1.52 14.1 4.68c1.87 2.15 1.87 5.63 0 7.78l-2.75 3.16" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+                  <path d="M15.5 8.63H1.07" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
                 </svg>
               </span>
             </Link>
