@@ -14,6 +14,20 @@ const TRANSLATIONS = [
   { id: 'bbe', label: 'Bible in Basic English' },
   { id: 'ylt', label: "Young's Literal Translation (NT)" },
   { id: 'darby', label: 'Darby Translation' },
+  { id: 'esv', label: 'English Standard Version (ESV)' },
+  { id: 'bsb', label: 'Berean Standard Bible (BSB)' },
+  { id: 'nas', label: 'New American Standard Bible (NASB)' },
+  { id: 'amp', label: 'Amplified Bible (AMP)' },
+  { id: 'csb', label: 'Christian Standard Bible (CSB)' },
+  { id: 'lsb', label: 'Legacy Standard Bible (LSB)' },
+  { id: 'net', label: 'New English Translation (NET)' },
+  { id: 'cev', label: 'Contemporary English Version (CEV)' },
+  { id: 'gnt', label: 'Good News Translation (GNT)' },
+  { id: 'isr', label: 'The Scriptures (ISR)' },
+  { id: 'isv', label: 'International Standard Version (ISV)' },
+  { id: 'erv', label: 'Easy-to-Read Version (ERV)' },
+  { id: 'drb', label: 'Douay-Rheims Bible (DRB)' },
+  { id: 'ara', label: 'Almeida Revista e Atualizada (ARA)' },
 ];
 
 const STORE_KEY = 'scripturepath:last-read';

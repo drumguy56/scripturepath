@@ -1,7 +1,40 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.54';
 
 const PUBLIC_TRANSLATIONS = ['kjv', 'web', 'asv', 'bbe', 'ylt', 'darby'];
-const ALL_TRANSLATIONS = [...PUBLIC_TRANSLATIONS, 'nlt'];
+
+// bolls.life serves these translations with no key required.
+const BOLLS_TRANSLATIONS = {
+  esv: { code: 'ESV', name: 'English Standard Version' },
+  bsb: { code: 'BSB', name: 'Berean Standard Bible' },
+  nas: { code: 'NASB', name: 'New American Standard Bible' },
+  amp: { code: 'AMP', name: 'Amplified Bible' },
+  csb: { code: 'CSB17', name: 'Christian Standard Bible' },
+  lsb: { code: 'LSB', name: 'Legacy Standard Bible' },
+  net: { code: 'NET', name: 'New English Translation' },
+  cev: { code: 'CEVD', name: 'Contemporary English Version' },
+  gnt: { code: 'GNT', name: 'Good News Translation' },
+  isr: { code: 'TS2009', name: 'The Scriptures' },
+  isv: { code: 'ISV', name: 'International Standard Version' },
+  erv: { code: 'ERV', name: 'Easy-to-Read Version' },
+  drb: { code: 'DRB', name: 'Douay-Rheims Bible' },
+  ara: { code: 'ARA', name: 'Almeida Revista e Atualizada' },
+};
+
+const BOOK_NUMBERS = new Map(
+  [
+    'Genesis', 'Exodus', 'Leviticus', 'Numbers', 'Deuteronomy', 'Joshua', 'Judges', 'Ruth',
+    '1 Samuel', '2 Samuel', '1 Kings', '2 Kings', '1 Chronicles', '2 Chronicles', 'Ezra',
+    'Nehemiah', 'Esther', 'Job', 'Psalms', 'Proverbs', 'Ecclesiastes', 'Song of Solomon',
+    'Isaiah', 'Jeremiah', 'Lamentations', 'Ezekiel', 'Daniel', 'Hosea', 'Joel', 'Amos',
+    'Obadiah', 'Jonah', 'Micah', 'Nahum', 'Habakkuk', 'Zephaniah', 'Haggai', 'Zechariah',
+    'Malachi', 'Matthew', 'Mark', 'Luke', 'John', 'Acts', 'Romans', '1 Corinthians',
+    '2 Corinthians', 'Galatians', 'Ephesians', 'Philippians', 'Colossians',
+    '1 Thessalonians', '2 Thessalonians', '1 Timothy', '2 Timothy', 'Titus', 'Philemon',
+    'Hebrews', 'James', '1 Peter', '2 Peter', '1 John', '2 John', '3 John', 'Jude', 'Revelation',
+  ].map((name, index) => [name, index + 1])
+);
+
+const ALL_TRANSLATIONS = [...PUBLIC_TRANSLATIONS, 'nlt', ...Object.keys(BOLLS_TRANSLATIONS)];
 
 const NLT_BOOK_ALIASES = {
   'Song of Solomon': 'Song of Songs',
@@ -94,6 +127,35 @@ async function fetchNlt(book, chapter) {
   return parseNlt(html);
 }
 
+// Drops the inline footnote/heading markers (<sup>…</sup>) before flattening to plain text.
+function cleanBollsText(text) {
+  return toPlainText(
+    String(text || '')
+      .replace(/<b>[\s\S]*?<\/b>\s*(?=<br\s*\/?>)/gi, ' ')
+      .replace(/<sup[\s\S]*?<\/sup>/gi, ' ')
+  );
+}
+
+async function fetchBolls(translation, book, chapter) {
+  const entry = BOLLS_TRANSLATIONS[translation];
+  const number = BOOK_NUMBERS.get(book);
+  if (!entry || !number) return null;
+
+  const url = `https://bolls.life/get-chapter/${entry.code}/${number}/${chapter}/`;
+  const res = await fetch(url, { signal: AbortSignal.timeout(12000) }).catch(() => null);
+  if (!res || !res.ok) return null;
+
+  const list = await res.json().catch(() => null);
+  if (!Array.isArray(list)) return null;
+
+  const verses = list
+    .map((item) => ({ verse: Number(item.verse), text: cleanBollsText(item.text) }))
+    .filter((item) => item.text);
+
+  if (verses.length === 0) return null;
+  return { reference: `${book} ${chapter}`, translation: entry.name, verses };
+}
+
 export default async function (req) {
   try {
     const base44 = createClientFromRequest(req);
@@ -134,6 +196,8 @@ export default async function (req) {
           verses: parsed.verses,
         };
       }
+    } else if (BOLLS_TRANSLATIONS[translation]) {
+      result = await fetchBolls(translation, book, chapter);
     } else {
       const url = `https://bible-api.com/${encodeURIComponent(book)}+${chapter}?translation=${translation}`;
       const res = await fetch(url, { signal: AbortSignal.timeout(10000) });
