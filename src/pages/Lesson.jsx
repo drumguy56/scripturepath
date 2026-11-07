@@ -2,12 +2,16 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { useAuth } from '@/lib/AuthContext';
 import { Textarea } from '@/components/ui/textarea';
+import LessonDiscussion from '@/components/groups/LessonDiscussion';
 
 export default function Lesson() {
   const { studyId, lessonId } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
+  const [group, setGroup] = useState(null);
   const [lesson, setLesson] = useState(null);
   const [study, setStudy] = useState(null);
   const [siblings, setSiblings] = useState([]);
@@ -31,7 +35,7 @@ export default function Lesson() {
           if (active) setLesson(null);
           return;
         }
-        const [studyRecord, lessonPage, progressList, entryPage] = await Promise.all([
+        const [studyRecord, lessonPage, progressList, entryPage, groupPage] = await Promise.all([
           base44.entities.Study.get(lessonRecord.study_id),
           base44.entities.Lesson.filter(
             { study_id: lessonRecord.study_id },
@@ -42,6 +46,10 @@ export default function Lesson() {
             { lesson_id: lessonId },
             { sort: '-created_date', limit: 50 }
           ),
+          base44.entities.StudyGroup.filter(
+            { study_id: lessonRecord.study_id },
+            { sort: '-updated_date', limit: 5 }
+          ),
         ]);
         if (!active) return;
 
@@ -49,6 +57,7 @@ export default function Lesson() {
         setStudy(studyRecord);
         setSiblings(lessonPage.items);
         setEntries(entryPage.items);
+        setGroup(groupPage.items[0] || null);
 
         const existing = progressList[0];
         if (existing) {
@@ -253,6 +262,8 @@ export default function Lesson() {
           </p>
         </section>
       )}
+
+      {group && <LessonDiscussion group={group} lesson={lesson} user={user} />}
 
       <footer className="mt-14 border-t border-border/80 pt-8">
         <div className="flex flex-wrap items-center justify-between gap-4">
