@@ -38,7 +38,7 @@ export default function AppLayout() {
                 key={link.to}
                 to={link.to}
                 className={({ isActive }) =>
-                  `text-[15px] tracking-[0.02em] transition-colors ${
+                  `text-[15px] font-semibold tracking-[0.02em] transition-colors ${
                     isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
                   }`
                 }
@@ -72,7 +72,7 @@ export default function AppLayout() {
               key={link.to}
               to={link.to}
               className={({ isActive }) =>
-                `text-[14px] tracking-[0.04em] transition-colors ${
+                `text-[14px] font-semibold tracking-[0.04em] transition-colors ${
                   isActive ? 'text-foreground' : 'text-muted-foreground'
                 }`
               }
