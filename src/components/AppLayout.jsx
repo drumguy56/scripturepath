@@ -4,7 +4,7 @@ import { Image } from '@/components/ui/image';
 import { useAuth } from '@/lib/AuthContext';
 
 const LOGO =
-  'https://media.base44.com/images/public/6aee56731f3f58a24e730082/1bd5a65fe_logo.png';
+  'https://media.base44.com/images/public/6aee56731f3f58a24e730082/57f3a7272_generated_image.png';
 
 const LINKS = [
   { to: '/', label: 'Today' },

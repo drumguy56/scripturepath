@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Image } from '@/components/ui/image';
 
 const LOGO =
-  'https://media.base44.com/images/public/6aee56731f3f58a24e730082/1bd5a65fe_logo.png';
+  'https://media.base44.com/images/public/6aee56731f3f58a24e730082/57f3a7272_generated_image.png';
 
 export default function AuthLayout({ icon: Icon, title, subtitle, footer, children }) {
   return (
