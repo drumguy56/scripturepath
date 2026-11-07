@@ -15,16 +15,16 @@ export default function ContinueStudyCard({ study, nextLesson, completed = 0 }) 
         </div>
         <Link
           to="/library"
-          className="group relative inline-flex shrink-0 items-center gap-3 overflow-hidden rounded-full bg-[hsl(18_92%_52%)] py-2 pl-6 pr-2 text-primary-foreground shadow-[0_18px_42px_-16px_hsl(18_92%_52%/0.85)] ring-1 ring-[hsl(18_92%_52%/0.45)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[hsl(18_95%_46%)] hover:shadow-[0_28px_62px_-18px_hsl(18_92%_52%/0.95)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(18_92%_52%)] focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          className="group relative inline-flex shrink-0 items-center gap-3 overflow-hidden rounded-full bg-[hsl(197_100%_54%)] py-2 pl-6 pr-2 text-[hsl(210_65%_10%)] shadow-[0_18px_44px_-14px_hsl(197_100%_60%/0.9)] ring-1 ring-[hsl(197_100%_60%/0.6)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[hsl(197_100%_47%)] hover:shadow-[0_28px_64px_-16px_hsl(197_100%_62%/1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(197_100%_54%)] focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute inset-y-0 -left-full w-full bg-[linear-gradient(100deg,transparent,hsl(var(--primary-foreground)/0.32),transparent)] transition-all duration-[900ms] ease-out group-hover:left-full"
+            className="pointer-events-none absolute inset-y-0 -left-full w-full bg-[linear-gradient(100deg,transparent,hsl(0_0%_100%/0.45),transparent)] transition-all duration-[900ms] ease-out group-hover:left-full"
           />
           <span className="relative text-[13px] font-medium uppercase tracking-[0.14em]">
             Find a study
           </span>
-          <span className="relative grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[hsl(var(--primary-foreground)/0.2)] transition-all duration-300 group-hover:bg-primary-foreground group-hover:text-[hsl(18_92%_48%)]">
+          <span className="relative grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[hsl(210_65%_10%/0.14)] transition-all duration-300 group-hover:bg-[hsl(210_65%_10%)] group-hover:text-[hsl(197_100%_62%)]">
             <ArrowRight className="h-[15px] w-[15px] transition-transform duration-300 group-hover:translate-x-[2px]" />
           </span>
         </Link>
