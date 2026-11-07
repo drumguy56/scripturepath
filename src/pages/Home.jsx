@@ -90,6 +90,10 @@ export default function Home() {
 
       <Hero />
 
+      <section className="mx-auto max-w-[1180px] px-5 pt-14 sm:px-8 md:pt-16">
+        <ReadPassageCard />
+      </section>
+
       <section className="mx-auto max-w-[1180px] px-5 pt-16 sm:px-8 md:pt-20">
         <div className="mb-6 flex items-end justify-between gap-6">
           <h2 className="text-[26px] leading-tight md:text-[30px]">Continue</h2>
@@ -128,10 +132,6 @@ export default function Home() {
             ))}
           </div>
         )}
-      </section>
-
-      <section className="mx-auto max-w-[1180px] px-5 pt-20 sm:px-8">
-        <ReadPassageCard />
       </section>
 
       <section className="mx-auto max-w-[1180px] px-5 pt-20 sm:px-8">
