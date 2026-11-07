@@ -6,7 +6,7 @@ import { BIBLE_BOOKS, findBook } from '@/data/bibleBooks';
 const TESTAMENTS = ['Old', 'New'];
 
 const selectClass =
-  'h-[42px] rounded-[4px] border border-border bg-card px-3 text-[13.5px] text-foreground/85 outline-none transition-colors focus:border-foreground/40';
+  'h-[42px] cursor-pointer rounded-[4px] border border-[hsl(197_100%_66%)] bg-[hsl(197_100%_54%)] px-3 text-[13.5px] font-medium text-[hsl(210_65%_10%)] outline-none shadow-[0_14px_34px_-18px_hsl(197_100%_60%/0.8)] transition-all duration-300 hover:bg-[hsl(197_100%_47%)] focus-visible:border-[hsl(210_65%_10%)] focus-visible:ring-2 focus-visible:ring-[hsl(197_100%_54%)]/50';
 
 export default function ReadPassageCard() {
   const navigate = useNavigate();
