@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import Hero from '@/components/Hero';
 import VerseOfTheDay from '@/components/VerseOfTheDay';
+import WeatherCard from '@/components/WeatherCard';
 import StudyCard from '@/components/StudyCard';
 import ContinueStudyCard from '@/components/ContinueStudyCard';
 import { base44 } from '@/api/base44Client';
@@ -83,6 +84,7 @@ export default function Home() {
     <>
       <section className="mx-auto max-w-[1180px] px-5 pt-6 sm:px-8 sm:pt-8">
         <VerseOfTheDay />
+        <WeatherCard />
       </section>
 
       <Hero />
