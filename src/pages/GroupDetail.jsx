@@ -8,6 +8,7 @@ import MemberList from '@/components/groups/MemberList';
 import GroupSessions from '@/components/groups/GroupSessions';
 import MemberProgress from '@/components/groups/MemberProgress';
 import GroupChat from '@/components/groups/GroupChat';
+import GroupBadges from '@/components/groups/GroupBadges';
 
 export default function GroupDetail() {
   const { groupId } = useParams();
@@ -165,6 +166,8 @@ export default function GroupDetail() {
       />
 
       <GroupSessions group={group} isOwner={isOwner} />
+
+      <GroupBadges group={group} members={members || group.member_profiles || []} user={user} />
     </div>
   );
 }
