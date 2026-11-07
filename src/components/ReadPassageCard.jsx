@@ -1,24 +1,16 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, BookOpen } from 'lucide-react';
-import { BIBLE_BOOKS, findBook } from '@/data/bibleBooks';
-
-const TESTAMENTS = ['Old', 'New'];
-
-const selectClass =
-  'h-[42px] cursor-pointer rounded-[4px] border border-[hsl(197_100%_66%)] bg-[hsl(197_100%_54%)] px-3 text-[13.5px] font-medium text-[hsl(210_65%_10%)] outline-none shadow-[0_14px_34px_-18px_hsl(197_100%_60%/0.8)] transition-all duration-300 hover:bg-[hsl(197_100%_47%)] focus-visible:border-[hsl(210_65%_10%)] focus-visible:ring-2 focus-visible:ring-[hsl(197_100%_54%)]/50';
+import { ArrowRight, BookOpen, ChevronDown } from 'lucide-react';
+import { findBook } from '@/data/bibleBooks';
+import BookPicker from '@/components/bible/BookPicker';
 
 export default function ReadPassageCard() {
   const navigate = useNavigate();
   const [slug, setSlug] = useState('john');
   const [chapter, setChapter] = useState(1);
+  const [pickerOpen, setPickerOpen] = useState(false);
 
-  const book = findBook(slug) || BIBLE_BOOKS[0];
-
-  const chooseBook = (value) => {
-    setSlug(value);
-    setChapter(1);
-  };
+  const book = findBook(slug) || findBook('john');
 
   const open = () => navigate(`/read/${book.slug}/${chapter}`);
 
@@ -34,35 +26,15 @@ export default function ReadPassageCard() {
         </p>
 
         <div className="mt-6 flex flex-wrap items-center gap-2.5">
-          <select
-            value={slug}
-            onChange={(event) => chooseBook(event.target.value)}
-            aria-label="Book"
-            className={`${selectClass} max-w-[220px]`}
+          <button
+            type="button"
+            onClick={() => setPickerOpen(true)}
+            aria-label="Choose a book and chapter"
+            className="inline-flex h-[42px] items-center gap-2.5 rounded-[4px] border border-border bg-background px-4 text-[13.5px] font-medium text-foreground transition-colors hover:border-foreground/40 hover:bg-secondary/60"
           >
-            {TESTAMENTS.map((testament) => (
-              <optgroup key={testament} label={`${testament} Testament`}>
-                {BIBLE_BOOKS.filter((item) => item.testament === testament).map((item) => (
-                  <option key={item.slug} value={item.slug}>
-                    {item.name}
-                  </option>
-                ))}
-              </optgroup>
-            ))}
-          </select>
-
-          <select
-            value={chapter}
-            onChange={(event) => setChapter(Number(event.target.value))}
-            aria-label="Chapter"
-            className={selectClass}
-          >
-            {Array.from({ length: book.chapters }, (_, index) => index + 1).map((num) => (
-              <option key={num} value={num}>
-                Chapter {num}
-              </option>
-            ))}
-          </select>
+            {book.name} {chapter}
+            <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />
+          </button>
 
           <button
             type="button"
@@ -80,6 +52,17 @@ export default function ReadPassageCard() {
           {chapter}
         </span>
       </div>
+
+      <BookPicker
+        open={pickerOpen}
+        onOpenChange={setPickerOpen}
+        currentSlug={book.slug}
+        onSelect={(nextSlug, nextChapter) => {
+          setSlug(nextSlug);
+          setChapter(nextChapter);
+          setPickerOpen(false);
+        }}
+      />
     </div>
   );
 }
