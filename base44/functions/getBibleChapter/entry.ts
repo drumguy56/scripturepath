@@ -173,6 +173,96 @@ async function fetchBolls(translation, book, chapter) {
   return { reference: `${book} ${chapter}`, translation: entry.name, verses };
 }
 
+async function resolveNivBibleId(key) {
+  if (nivBibleId) return nivBibleId;
+  const res = await fetch(
+    'https://api.scripture.api.bible/v1/bibles?language=eng&include-full-details=false',
+    { headers: { 'api-key': key }, signal: AbortSignal.timeout(12000) }
+  ).catch(() => null);
+  if (!res || !res.ok) return null;
+  const data = await res.json().catch(() => null);
+  const list = Array.isArray(data?.data) ? data.data : [];
+  const match =
+    list.find((item) => String(item.abbreviation || '').toUpperCase() === 'NIV') ||
+    list.find((item) => /^NIV/i.test(String(item.abbreviation || '')));
+  if (!match) return null;
+  nivBibleId = match.id;
+  return nivBibleId;
+}
+
+// Walks API.Bible's USX JSON, splitting text at each verse marker and dropping notes.
+function readUsx(items, bucket) {
+  for (const node of items || []) {
+    if (!node || typeof node !== 'object') continue;
+    if (node.type === 'text') {
+      if (bucket.current !== null) {
+        bucket.text[bucket.current] = (bucket.text[bucket.current] || '') + (node.text || '');
+      }
+      continue;
+    }
+    if (node.name === 'verse' && node.attrs?.number) {
+      bucket.current = String(node.attrs.number);
+      if (bucket.text[bucket.current] === undefined) bucket.text[bucket.current] = '';
+      continue;
+    }
+    if (node.name === 'note' || node.name === 'title') continue;
+    if (Array.isArray(node.items)) readUsx(node.items, bucket);
+  }
+}
+
+function parseNumberedText(text) {
+  const clean = toPlainText(String(text || ''));
+  const markers = [...clean.matchAll(/\[(\d+)\]/g)];
+  if (markers.length === 0) return [];
+  return markers
+    .map((marker, index) => {
+      const start = marker.index + marker[0].length;
+      const end = index + 1 < markers.length ? markers[index + 1].index : clean.length;
+      return { verse: Number(marker[1]), text: clean.slice(start, end).replace(/\s+/g, ' ').trim() };
+    })
+    .filter((item) => item.text);
+}
+
+async function fetchNiv(key, book, chapter) {
+  const number = BOOK_NUMBERS.get(book);
+  const osis = number ? NIV_OSIS[number - 1] : null;
+  if (!osis) return null;
+
+  const bibleId = await resolveNivBibleId(key);
+  if (!bibleId) return null;
+
+  const params =
+    'content-type=json&include-notes=false&include-titles=false' +
+    '&include-chapter-numbers=false&include-verse-numbers=true&include-verse-spans=false';
+  const url = `https://api.scripture.api.bible/v1/bibles/${bibleId}/chapters/${osis}.${chapter}?${params}`;
+  const res = await fetch(url, {
+    headers: { 'api-key': key },
+    signal: AbortSignal.timeout(15000),
+  }).catch(() => null);
+  if (!res || !res.ok) return null;
+
+  const data = await res.json().catch(() => null);
+  const content = data?.data?.content;
+
+  const bucket = { current: null, text: {} };
+  if (Array.isArray(content)) readUsx(content, bucket);
+  const verses = Object.keys(bucket.text)
+    .map(Number)
+    .sort((a, b) => a - b)
+    .map((verse) => ({
+      verse,
+      text: String(bucket.text[String(verse)] || '').replace(/\s+/g, ' ').trim(),
+    }))
+    .filter((item) => item.text);
+
+  if (verses.length === 0 || !data?.data?.reference) return null;
+  return {
+    reference: data.data.reference,
+    translation: 'New International Version',
+    verses,
+  };
+}
+
 export default async function (req) {
   try {
     const base44 = createClientFromRequest(req);
@@ -213,6 +303,18 @@ export default async function (req) {
           verses: parsed.verses,
         };
       }
+    } else if (translation === 'niv') {
+      const key = Deno.env.get('API_BIBLE_KEY');
+      if (!key) {
+        return Response.json(
+          {
+            error:
+              'NIV is licensed and needs an API.Bible key. Add your key to unlock it.',
+          },
+          { status: 400 }
+        );
+      }
+      result = await fetchNiv(key, book, chapter);
     } else if (BOLLS_TRANSLATIONS[translation]) {
       result = await fetchBolls(translation, book, chapter);
     } else {

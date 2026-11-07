@@ -8,6 +8,7 @@ import BookPicker from '@/components/bible/BookPicker';
 
 const TRANSLATIONS = [
   { id: 'nlt', label: 'New Living Translation' },
+  { id: 'niv', label: 'New International Version (NIV)' },
   { id: 'kjv', label: 'King James Version' },
   { id: 'web', label: 'World English Bible' },
   { id: 'asv', label: 'American Standard Version' },
@@ -182,6 +183,14 @@ export default function Read() {
           loading={loading}
           error={error}
         />
+
+        {translation === 'niv' && !loading && !error && (
+          <p className="mt-8 border-t border-border/70 pt-4 text-[11.5px] leading-relaxed text-muted-foreground">
+            Scripture quotations taken from The Holy Bible, New International Version®, NIV®
+            Copyright © 1973, 1978, 1984, 2011 by Biblica, Inc.® Used by permission. All
+            rights reserved worldwide.
+          </p>
+        )}
 
         {translation === 'nlt' && !loading && !error && (
           <p className="mt-8 border-t border-border/70 pt-4 text-[11.5px] leading-relaxed text-muted-foreground">
