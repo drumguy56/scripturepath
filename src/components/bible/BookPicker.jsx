@@ -16,73 +16,54 @@ const TESTAMENTS = [
 
 export default function BookPicker({ open, onOpenChange, currentSlug, onSelect }) {
   const [activeBook, setActiveBook] = useState(null);
-  const [testament, setTestament] = useState('Old');
 
   useEffect(() => {
-    if (open) {
-      setActiveBook(null);
-      const current = findBook(currentSlug);
-      if (current) setTestament(current.testament);
-    }
-  }, [open, currentSlug]);
+    if (open) setActiveBook(null);
+  }, [open]);
 
   const selected = findBook(activeBook);
-  const books = BIBLE_BOOKS.filter((book) => book.testament === testament);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[88vh] max-w-[680px] overflow-hidden rounded-[14px] border-border bg-card p-0">
-        <DialogHeader className="border-b border-border/70 px-6 py-5 text-left">
+      <DialogContent className="flex max-h-[88vh] max-w-[700px] flex-col gap-0 overflow-hidden rounded-[14px] border-border bg-card p-0">
+        <DialogHeader className="shrink-0 border-b border-border/70 px-6 py-5 text-left">
           <DialogTitle className="font-heading text-[20px] font-normal">
             {selected ? selected.name : 'Choose a passage'}
           </DialogTitle>
           <DialogDescription className="text-[12.5px] text-muted-foreground">
             {selected
-              ? `Pick a chapter of ${selected.name}`
-              : 'All 66 books, in the order you would find them in a Bible.'}
+              ? `Pick a chapter of ${selected.name} — ${selected.chapters} in all.`
+              : 'Every book of the Bible, all 66, in their usual order.'}
           </DialogDescription>
         </DialogHeader>
 
-        <div className="max-h-[68vh] overflow-y-auto overscroll-contain px-6 py-5">
-          {!selected && (
-            <div>
-              <div className="mb-5 flex gap-2">
-                {TESTAMENTS.map((item) => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => setTestament(item.id)}
-                    className={`flex-1 rounded-[6px] border px-3 py-2 text-[12px] font-medium uppercase tracking-[0.1em] transition-colors ${
-                      testament === item.id
-                        ? 'border-transparent bg-[hsl(197_100%_54%)] text-[hsl(210_65%_10%)]'
-                        : 'border-border text-muted-foreground hover:border-foreground/40 hover:text-foreground'
-                    }`}
-                  >
-                    {item.label}
-                    <span className="ml-1.5 opacity-70">
-                      {BIBLE_BOOKS.filter((book) => book.testament === item.id).length}
-                    </span>
-                  </button>
-                ))}
-              </div>
-
-              <div className="grid grid-cols-2 gap-x-2 gap-y-1 sm:grid-cols-3">
-                {books.map((book) => (
-                  <button
-                    key={book.slug}
-                    type="button"
-                    onClick={() => setActiveBook(book.slug)}
-                    className={`flex items-center justify-between gap-2 rounded-[6px] px-2.5 py-2 text-left text-[13.5px] leading-snug transition-colors hover:bg-secondary ${
-                      book.slug === currentSlug ? 'text-primary' : 'text-foreground/85'
-                    }`}
-                  >
-                    <span>{book.name}</span>
-                    <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground/50" />
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
+        <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5">
+          {!selected &&
+            TESTAMENTS.map((testament) => {
+              const books = BIBLE_BOOKS.filter((book) => book.testament === testament.id);
+              return (
+                <div key={testament.id} className="mb-7 last:mb-0">
+                  <p className="mb-2.5 text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+                    {testament.label} · {books.length} books
+                  </p>
+                  <div className="grid grid-cols-2 gap-x-2 gap-y-1 sm:grid-cols-3">
+                    {books.map((book) => (
+                      <button
+                        key={book.slug}
+                        type="button"
+                        onClick={() => setActiveBook(book.slug)}
+                        className={`flex items-center justify-between gap-2 rounded-[6px] px-2.5 py-2 text-left text-[13.5px] leading-snug transition-colors hover:bg-secondary ${
+                          book.slug === currentSlug ? 'text-primary' : 'text-foreground/85'
+                        }`}
+                      >
+                        <span>{book.name}</span>
+                        <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground/50" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
 
           {selected && (
             <div>
