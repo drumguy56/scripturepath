@@ -36,6 +36,25 @@
           }
         }
       }
+    },
+    "schedule_start": {
+      "type": "string",
+      "format": "date"
+    },
+    "schedule_time": {
+      "type": "string"
+    },
+    "schedule_cadence": {
+      "type": "string",
+      "enum": [
+        "Weekly",
+        "Every other week"
+      ],
+      "enumColors": [
+        "green",
+        "blue"
+      ],
+      "default": "Weekly"
     }
   },
   "required": [

@@ -5,6 +5,7 @@ import { base44 } from '@/api/base44Client';
 import { useAuth } from '@/lib/AuthContext';
 import InvitePanel from '@/components/groups/InvitePanel';
 import MemberList from '@/components/groups/MemberList';
+import GroupSessions from '@/components/groups/GroupSessions';
 
 export default function GroupDetail() {
   const { groupId } = useParams();
@@ -149,6 +150,8 @@ export default function GroupDetail() {
           </div>
         </div>
       </div>
+
+      <GroupSessions group={group} isOwner={isOwner} />
     </div>
   );
 }

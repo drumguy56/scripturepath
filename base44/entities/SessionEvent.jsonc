@@ -1,0 +1,34 @@
+{
+  "name": "SessionEvent",
+  "type": "object",
+  "properties": {
+    "group_id": {
+      "type": "string"
+    },
+    "lesson_id": {
+      "type": "string"
+    },
+    "event_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "group_id",
+    "lesson_id",
+    "event_id"
+  ],
+  "rls": {
+    "read": {
+      "created_by_id": "{{user.id}}"
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "created_by_id": "{{user.id}}"
+    }
+  }
+}
