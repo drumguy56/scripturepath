@@ -15,9 +15,18 @@ export default function ContinueStudyCard({ study, nextLesson, completed = 0 }) 
         </div>
         <Link
           to="/library"
-          className="inline-flex shrink-0 items-center gap-2 rounded-[4px] bg-primary px-5 py-3 text-[12.5px] font-medium uppercase tracking-[0.14em] text-primary-foreground transition-colors hover:bg-foreground"
+          className="group relative inline-flex shrink-0 items-center gap-3 overflow-hidden rounded-full bg-[hsl(18_92%_52%)] py-2 pl-6 pr-2 text-primary-foreground shadow-[0_18px_42px_-16px_hsl(18_92%_52%/0.85)] ring-1 ring-[hsl(18_92%_52%/0.45)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[hsl(18_95%_46%)] hover:shadow-[0_28px_62px_-18px_hsl(18_92%_52%/0.95)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(18_92%_52%)] focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
-          Find a study <ArrowRight className="h-4 w-4" />
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-y-0 -left-full w-full bg-[linear-gradient(100deg,transparent,hsl(var(--primary-foreground)/0.32),transparent)] transition-all duration-[900ms] ease-out group-hover:left-full"
+          />
+          <span className="relative text-[13px] font-medium uppercase tracking-[0.14em]">
+            Find a study
+          </span>
+          <span className="relative grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[hsl(var(--primary-foreground)/0.2)] transition-all duration-300 group-hover:bg-primary-foreground group-hover:text-[hsl(18_92%_48%)]">
+            <ArrowRight className="h-[15px] w-[15px] transition-transform duration-300 group-hover:translate-x-[2px]" />
+          </span>
         </Link>
       </div>
     );
