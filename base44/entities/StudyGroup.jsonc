@@ -62,8 +62,14 @@
     "invite_code"
   ],
   "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
     "read": {
       "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
         {
           "data.members": "{{user.id}}"
         },
@@ -73,9 +79,6 @@
           }
         }
       ]
-    },
-    "create": {
-      "created_by_id": "{{user.id}}"
     },
     "update": {
       "created_by_id": "{{user.id}}"
