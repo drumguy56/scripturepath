@@ -29,6 +29,9 @@ module.exports = {
   				DEFAULT: 'hsl(var(--button))',
   				foreground: 'hsl(var(--button-foreground))'
   			},
+  			brand: {
+  				plate: 'hsl(var(--brand-plate))'
+  			},
   			secondary: {
   				DEFAULT: 'hsl(var(--secondary))',
   				foreground: 'hsl(var(--secondary-foreground))'
@@ -36,6 +39,9 @@ module.exports = {
   			muted: {
   				DEFAULT: 'hsl(var(--muted))',
   				foreground: 'hsl(var(--muted-foreground))'
+  			},
+  			neutral: {
+  				foreground: 'hsl(var(--neutral-foreground))'
   			},
   			accent: {
   				DEFAULT: 'hsl(var(--accent))',
