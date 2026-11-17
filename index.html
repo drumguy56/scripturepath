@@ -1,7 +1,23 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      // Apply the saved theme before the first paint so the page never shows
+      // the wrong background for a frame. Mirrors next-themes' storage key and
+      // its dark default.
+      (function () {
+        try {
+          // Dark unless the reader has explicitly chosen light.
+          document.documentElement.classList.toggle(
+            'dark',
+            localStorage.getItem('theme') !== 'light'
+          );
+        } catch (error) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
     <link rel="icon" type="image/png" href="https://media.base44.com/images/public/6aee56731f3f58a24e730082/57f3a7272_generated_image.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="manifest" href="/manifest.json" />
