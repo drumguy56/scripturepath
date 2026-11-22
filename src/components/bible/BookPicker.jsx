@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { ArrowLeft, ChevronRight } from 'lucide-react';
 import { BIBLE_BOOKS, findBook } from '@/data/bibleBooks';
 import {
   Dialog,
@@ -14,83 +13,96 @@ const TESTAMENTS = [
   { id: 'New', label: 'New Testament' },
 ];
 
+const selectClass =
+  'h-[42px] w-full rounded-[4px] border border-border bg-card px-3 text-[14px] text-foreground outline-none focus:border-foreground/40';
+
 export default function BookPicker({ open, onOpenChange, currentSlug, onSelect }) {
-  const [activeBook, setActiveBook] = useState(null);
+  const [bookSlug, setBookSlug] = useState(currentSlug);
+  const [chapter, setChapter] = useState(1);
 
   useEffect(() => {
-    if (open) setActiveBook(null);
-  }, [open]);
+    if (open) {
+      setBookSlug(findBook(currentSlug)?.slug ?? BIBLE_BOOKS[0].slug);
+      setChapter(1);
+    }
+  }, [open, currentSlug]);
 
-  const selected = findBook(activeBook);
+  const book = findBook(bookSlug) || BIBLE_BOOKS[0];
+
+  const handleBookChange = (event) => {
+    setBookSlug(event.target.value);
+    setChapter(1);
+  };
+
+  const handleOpen = () => {
+    onSelect(book.slug, chapter);
+    onOpenChange(false);
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="flex max-h-[88vh] max-w-[700px] flex-col gap-0 overflow-hidden rounded-[14px] border-border bg-card p-0">
-        <DialogHeader className="shrink-0 border-b border-border/70 px-6 py-5 text-left">
-          <DialogTitle className="font-heading text-[20px] font-normal">
-            {selected ? selected.name : 'Choose a passage'}
-          </DialogTitle>
+      <DialogContent className="max-w-[480px] gap-0 overflow-hidden rounded-[14px] border-border bg-card p-0">
+        <DialogHeader className="border-b border-border/70 px-6 py-5 text-left">
+          <DialogTitle className="font-heading text-[20px] font-normal">Choose a passage</DialogTitle>
           <DialogDescription className="text-[12.5px] text-muted-foreground">
-            {selected
-              ? `Pick a chapter of ${selected.name} — ${selected.chapters} in all.`
-              : 'Every book of the Bible, all 66, in their usual order.'}
+            Pick a book and chapter of the Bible.
           </DialogDescription>
         </DialogHeader>
 
-        <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5">
-          {!selected &&
-            TESTAMENTS.map((testament) => {
-              const books = BIBLE_BOOKS.filter((book) => book.testament === testament.id);
-              return (
-                <div key={testament.id} className="mb-7 last:mb-0">
-                  <p className="mb-2.5 text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
-                    {testament.label} · {books.length} books
-                  </p>
-                  <div className="grid grid-cols-2 gap-x-2 gap-y-1 sm:grid-cols-3">
-                    {books.map((book) => (
-                      <button
-                        key={book.slug}
-                        type="button"
-                        onClick={() => setActiveBook(book.slug)}
-                        className={`flex items-center justify-between gap-2 rounded-[6px] px-2.5 py-2 text-left text-[13.5px] leading-snug transition-colors hover:bg-secondary ${
-                          book.slug === currentSlug ? 'text-primary' : 'text-foreground/85'
-                        }`}
-                      >
-                        <span>{book.name}</span>
-                        <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground/50" />
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
+        <div className="space-y-5 px-6 py-6">
+          <div className="space-y-2">
+            <label
+              htmlFor="book-select"
+              className="block text-[11px] uppercase tracking-[0.16em] text-muted-foreground"
+            >
+              Book
+            </label>
+            <select
+              id="book-select"
+              value={book.slug}
+              onChange={handleBookChange}
+              className={selectClass}
+            >
+              {TESTAMENTS.map((testament) => (
+                <optgroup key={testament.id} label={testament.label}>
+                  {BIBLE_BOOKS.filter((item) => item.testament === testament.id).map((item) => (
+                    <option key={item.slug} value={item.slug}>
+                      {item.name}
+                    </option>
+                  ))}
+                </optgroup>
+              ))}
+            </select>
+          </div>
 
-          {selected && (
-            <div>
-              <button
-                type="button"
-                onClick={() => setActiveBook(null)}
-                className="mb-4 inline-flex items-center gap-1.5 text-[12px] uppercase tracking-[0.12em] text-muted-foreground transition-colors hover:text-foreground"
-              >
-                <ArrowLeft className="h-3.5 w-3.5" /> All books
-              </button>
-              <div className="grid grid-cols-6 gap-1.5 sm:grid-cols-8">
-                {Array.from({ length: selected.chapters }, (_, index) => index + 1).map((num) => (
-                  <button
-                    key={num}
-                    type="button"
-                    onClick={() => {
-                      onSelect(selected.slug, num);
-                      onOpenChange(false);
-                    }}
-                    className="grid h-10 place-items-center rounded-[6px] border border-border text-[13px] transition-colors hover:border-foreground/40 hover:bg-secondary"
-                  >
-                    {num}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
+          <div className="space-y-2">
+            <label
+              htmlFor="chapter-select"
+              className="block text-[11px] uppercase tracking-[0.16em] text-muted-foreground"
+            >
+              Chapter
+            </label>
+            <select
+              id="chapter-select"
+              value={chapter}
+              onChange={(event) => setChapter(Number(event.target.value))}
+              className={selectClass}
+            >
+              {Array.from({ length: book.chapters }, (_, index) => index + 1).map((num) => (
+                <option key={num} value={num}>
+                  {num}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleOpen}
+            className="inline-flex h-[42px] w-full items-center justify-center rounded-[4px] border border-foreground/70 text-[12px] font-medium uppercase tracking-[0.12em] text-foreground transition-colors hover:bg-foreground hover:text-background"
+          >
+            Open {book.name} {chapter}
+          </button>
         </div>
       </DialogContent>
     </Dialog>
