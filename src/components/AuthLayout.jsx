@@ -5,7 +5,7 @@ import { Image } from '@/components/ui/image';
 const LOGO =
   '/media/57f3a7272_generated_image.png';
 
-export default function AuthLayout({ icon: Icon, title, subtitle, footer, children }) {
+export default function AuthLayout({ icon: Icon, title, subtitle, footer = null, children }) {
   return (
     <div className="min-h-screen bg-background">
       <div className="mx-auto grid min-h-screen max-w-[1180px] lg:grid-cols-[minmax(0,1fr)_380px]">

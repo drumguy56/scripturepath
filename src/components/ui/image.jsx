@@ -8,7 +8,7 @@ const FALLBACK_IMAGE_URL = "/media/placeholder.png"
  * (object-contain); the default crops to fill (object-cover). If the image
  * fails to load, it swaps once to the generic placeholder.
  */
-const Image = React.forwardRef(
+const Image = /** @type {any} */ (React.forwardRef)(/** @type {any} */ (
   ({ src, alt, fittingType = "fill", className, onError, ...props }, ref) => {
     const [failed, setFailed] = React.useState(false)
     React.useEffect(() => setFailed(false), [src])
@@ -32,7 +32,7 @@ const Image = React.forwardRef(
       />
     )
   }
-)
+))
 Image.displayName = "Image"
 
 export { Image }

@@ -10,6 +10,7 @@
     "lint": "eslint . --quiet",
     "test": "vitest run --passWithNoTests",
     "typecheck": "tsc -p ./jsconfig.json",
+    "typecheck:server": "tsc -p server/tsconfig.json",
     "db:migrate": "bun server/db/migrate.ts",
     "seed": "bun server/seed.ts"
   },

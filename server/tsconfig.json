@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "lib": ["esnext"],
+    "types": ["bun", "node"],
+    "strict": false,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": false,
+    "esModuleInterop": true,
+    "verbatimModuleSyntax": false
+  },
+  "include": ["./**/*.ts"],
+  "exclude": ["node_modules"]
+}

@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext, useEffect, useCallback } from 'react';
 import { auth } from '@/api/client';
 
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
 // Session state comes from GET /api/auth/me (the session cookie is sent automatically).
 export const AuthProvider = ({ children }) => {

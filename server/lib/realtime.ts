@@ -16,7 +16,7 @@ export const realtime = createRealtime({
 });
 
 export function entityLiveQuery(actor: Actor, entity: EntityName) {
-  const params: unknown[] = [entity];
+  const params: string[] = [entity];
   const scope = readScope(actor, entity);
   const extra = scope ? scope(params) : null;
   // Unscoped entities (public curriculum, Bible cache, admin views) are shared by everyone,

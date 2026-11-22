@@ -185,7 +185,7 @@ export const DAILY_VERSES = [
 
 export function getVerseOfTheDay(date = new Date()) {
   const start = new Date(date.getFullYear(), 0, 1);
-  const dayOfYear = Math.floor((date - start) / 86400000);
+  const dayOfYear = Math.floor((date.getTime() - start.getTime()) / 86400000);
   return DAILY_VERSES[dayOfYear % DAILY_VERSES.length];
 }
 

@@ -1,11 +1,11 @@
 // Transactional email. Sends through Gmail SMTP when GMAIL_USER and GMAIL_APP_PASSWORD are set
 // (an app password, not the account password). Otherwise the message is printed to the server
 // log so local development still works end to end.
-import nodemailer from 'nodemailer';
+import nodemailer, { type Transporter } from 'nodemailer';
 
 export type Mail = { to: string; subject: string; html: string; text: string };
 
-let transport: nodemailer.Transporter | null = null;
+let transport: Transporter | null = null;
 function getTransport() {
   if (!transport) {
     transport = nodemailer.createTransport({

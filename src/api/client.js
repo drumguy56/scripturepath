@@ -27,6 +27,7 @@ function clearToken() {
 }
 
 async function request(method, path, body) {
+  /** @type {Record<string, string>} */
   const headers = {};
   if (body !== undefined) headers['Content-Type'] = 'application/json';
   const token = await getToken();
@@ -46,6 +47,7 @@ async function request(method, path, body) {
   }
   if (!res.ok) {
     const message = (data && data.error) || `Request failed (${res.status})`;
+    /** @type {any} */
     const err = new Error(message);
     err.status = res.status;
     err.data = data;

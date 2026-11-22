@@ -40,7 +40,9 @@ export default function StudyDetail() {
     meta.name = 'prerender-status-code';
     meta.content = '404';
     document.head.appendChild(meta);
-    return () => document.head.removeChild(meta);
+    return () => {
+      document.head.removeChild(meta);
+    };
   }, [loading, study]);
 
   if (loading) {

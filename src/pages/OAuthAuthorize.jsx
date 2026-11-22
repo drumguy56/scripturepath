@@ -11,6 +11,7 @@ const SCOPE_LABELS = {
 
 async function call(path, options = {}) {
   const token = await getToken();
+  /** @type {Record<string, string>} */
   const headers = {};
   if (options.body) headers["Content-Type"] = "application/json";
   if (token) headers.Authorization = `Bearer ${token}`;
