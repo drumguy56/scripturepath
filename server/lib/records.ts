@@ -1,6 +1,5 @@
 import { randomUUID } from 'node:crypto';
 import { client } from '../db';
-import { publish } from './bus';
 
 // Entities stored as rows in the `records` table. Their fields live in `data` (jsonb).
 export const ENTITY_NAMES = [
@@ -160,7 +159,6 @@ export async function createRecord(entity: EntityName, data: Record<string, any>
     [id, entity, createdById, JSON.stringify(strip(data))] as any[]
   );
   const rec = toRec(row);
-  publish({ entity, type: 'create', id, data: rec, created_by_id: createdById });
   return rec;
 }
 
@@ -175,7 +173,6 @@ export async function updateRecord(entity: EntityName, id: string, patch: Record
   );
   if (!rows[0]) return null;
   const rec = toRec(rows[0]);
-  publish({ entity, type: 'update', id, data: rec, created_by_id: rec.created_by_id });
   return rec;
 }
 
@@ -189,7 +186,6 @@ export async function deleteRecord(entity: EntityName, id: string, scope?: Scope
   );
   if (!rows[0]) return false;
   const gone = toRec(rows[0]);
-  publish({ entity, type: 'delete', id, data: gone, created_by_id: gone.created_by_id });
   return true;
 }
 

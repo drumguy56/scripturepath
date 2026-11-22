@@ -13,7 +13,7 @@ Start with `README.md` for setup and environment variables.
 - `server/lib/policy.ts`: authorization rules. Add checks here, never only in the client.
 - `server/lib/records.ts`: generic entity storage on the `records` jsonb table.
 - `server/functions/`: named server functions called via `functions.invoke`.
-- `server/db/schema.ts`: tables. After changes run `npm run db:generate` and `npm run db:migrate`.
+- `server/db/schema.ts`: tables. After changes, write a migration with `bun server/db/new-migration.ts <name>`, fill in its SQL, then run `npm run db:migrate`.
 - `.env`: local secrets, never commit.
 
 ## Working notes

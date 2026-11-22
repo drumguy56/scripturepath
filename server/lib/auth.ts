@@ -1,12 +1,14 @@
-import { createHash, randomBytes, randomInt } from 'node:crypto';
+import { createHash, randomBytes } from 'node:crypto';
 import type { Context, Next } from 'hono';
-import { getCookie, setCookie, deleteCookie } from 'hono/cookie';
-import { and, eq, gt } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
+import { createRemoteJWKSet, jwtVerify, type JWTPayload } from 'jose';
 import { db, schema } from '../db';
 import { HttpError } from './records';
 
-export const SESSION_COOKIE = 'sp_session';
-const SESSION_DAYS = 30;
+// Accounts and sign-in are handled by Neon Auth (managed Better Auth). The browser signs in
+// through this server's /api/auth proxy, then sends a short-lived Neon Auth JWT as
+// `Authorization: Bearer`. Requests that only carry the Neon session cookie (page navigations,
+// the SSE stream, the Google Calendar popup) are exchanged for a JWT server-side first.
 
 export type Actor = {
   id: string;
@@ -16,7 +18,8 @@ export type Actor = {
   verified: boolean;
 };
 
-export const isSecureUrl = () => (process.env.APP_URL || '').startsWith('https://');
+const authBase = () => (process.env.NEON_AUTH_BASE_URL || '').replace(/\/$/, '');
+const adminEmail = () => (process.env.ADMIN_EMAIL || '').trim().toLowerCase();
 
 export function sha256(value: string) {
   return createHash('sha256').update(value).digest('hex');
@@ -26,42 +29,85 @@ export function randomToken(bytes = 32) {
   return randomBytes(bytes).toString('base64url');
 }
 
-export function sixDigitCode() {
-  return String(randomInt(0, 1_000_000)).padStart(6, '0');
+export const isSecureUrl = () => (process.env.APP_URL || '').startsWith('https://');
+
+let jwks: ReturnType<typeof createRemoteJWKSet> | null = null;
+function keySet() {
+  if (!jwks) jwks = createRemoteJWKSet(new URL(process.env.NEON_AUTH_JWKS_URL!));
+  return jwks;
 }
 
-export async function createSession(c: Context, userId: string) {
-  const token = randomToken();
-  const expires = new Date(Date.now() + SESSION_DAYS * 86_400_000);
-  await db.insert(schema.sessions).values({ token_hash: sha256(token), user_id: userId, expires_at: expires });
-  setCookie(c, SESSION_COOKIE, token, {
-    httpOnly: true,
-    sameSite: 'Lax',
-    secure: isSecureUrl(),
-    path: '/',
-    maxAge: SESSION_DAYS * 86_400,
-  });
+// Neon Auth issues tokens whose issuer and audience are the origin of the auth base URL.
+async function verifyJwt(token: string): Promise<JWTPayload | null> {
+  const issuer = new URL(authBase()).origin;
+  try {
+    const { payload } = await jwtVerify(token, keySet(), { issuer, audience: issuer });
+    return payload;
+  } catch {
+    return null;
+  }
 }
 
-export async function endSession(c: Context) {
-  const token = getCookie(c, SESSION_COOKIE);
-  if (token) await db.delete(schema.sessions).where(eq(schema.sessions.token_hash, sha256(token)));
-  deleteCookie(c, SESSION_COOKIE, { path: '/' });
+// Exchanges the Neon Auth session cookie for a JWT. Null when the cookie is absent or stale.
+async function jwtFromCookie(c: Context): Promise<string | null> {
+  const cookie = c.req.header('cookie');
+  if (!cookie || !cookie.includes('neon-auth')) return null;
+  const origin = new URL(c.req.url).origin;
+  const res = await fetch(`${authBase()}/token`, { headers: { cookie, origin } }).catch(() => null);
+  if (!res || !res.ok) return null;
+  const body = (await res.json().catch(() => null)) as { token?: string } | null;
+  return body?.token ?? null;
 }
 
-// Resolves the signed-in user from the session cookie, or null.
+// Creates the app's account row the first time a Neon Auth user signs in, and keeps the
+// name and email in step with Neon Auth. Admin status follows ADMIN_EMAIL.
+async function syncUser(claims: JWTPayload): Promise<Actor> {
+  const id = String(claims.sub);
+  const email = String(claims.email ?? '').trim().toLowerCase();
+  const name = String(claims.name ?? '').trim().slice(0, 120);
+  const isAdmin = email === adminEmail();
+
+  const [existing] = await db.select().from(schema.users).where(eq(schema.users.id, id)).limit(1);
+  if (existing) {
+    const wantRole = isAdmin && existing.role !== 'admin' ? 'admin' : existing.role;
+    if (existing.email !== email || existing.full_name !== name || wantRole !== existing.role) {
+      const [row] = await db
+        .update(schema.users)
+        .set({ email, full_name: name || existing.full_name, role: wantRole, updated_date: new Date() })
+        .where(eq(schema.users.id, id))
+        .returning();
+      return toActor(row);
+    }
+    return toActor(existing);
+  }
+
+  const [created] = await db
+    .insert(schema.users)
+    .values({ id, email, full_name: name, role: isAdmin ? 'admin' : 'user', verified: true })
+    .returning();
+  if (!isAdmin && adminEmail()) {
+    const { newMemberEmail, sendMail } = await import('./mail');
+    const mail = newMemberEmail({
+      name: created.full_name || created.email,
+      email: created.email,
+      joinedAt: new Date().toUTCString(),
+    });
+    sendMail({ to: adminEmail(), ...mail }).catch((err) => console.error('admin alert failed', err));
+  }
+  return toActor(created);
+}
+
+// The signed-in user, or null. Checks a Bearer JWT first, then the Neon Auth session cookie.
 export async function currentActor(c: Context): Promise<Actor | null> {
-  const token = getCookie(c, SESSION_COOKIE);
-  if (!token) return null;
-  const rows = await db
-    .select({ user: schema.users })
-    .from(schema.sessions)
-    .innerJoin(schema.users, eq(schema.users.id, schema.sessions.user_id))
-    .where(and(eq(schema.sessions.token_hash, sha256(token)), gt(schema.sessions.expires_at, new Date())))
-    .limit(1);
-  const user = rows[0]?.user;
-  if (!user) return null;
-  return toActor(user);
+  const header = c.req.header('authorization') || '';
+  const bearer = header.toLowerCase().startsWith('bearer ') ? header.slice(7).trim() : '';
+  let claims = bearer ? await verifyJwt(bearer) : null;
+  if (!claims) {
+    const token = await jwtFromCookie(c);
+    claims = token ? await verifyJwt(token) : null;
+  }
+  if (!claims?.sub || !claims.email) return null;
+  return syncUser(claims);
 }
 
 export function toActor(user: typeof schema.users.$inferSelect): Actor {
@@ -76,7 +122,7 @@ export function toActor(user: typeof schema.users.$inferSelect): Actor {
 
 export async function requireActor(c: Context, next: Next) {
   const actor = await currentActor(c);
-  if (!actor || !actor.verified) return c.json({ error: 'Unauthorized' }, 401);
+  if (!actor) return c.json({ error: 'Unauthorized' }, 401);
   c.set('actor', actor);
   await next();
 }
@@ -93,26 +139,4 @@ export function requireAdmin(actor: Actor) {
 
 export function displayName(actor: Actor) {
   return actor.full_name || actor.email || 'Member';
-}
-
-// Failed sign-in throttle: 8 failures per email inside 15 minutes locks the email out.
-const failures = new Map<string, number[]>();
-const WINDOW_MS = 15 * 60_000;
-const MAX_FAILURES = 8;
-
-export function loginLocked(email: string) {
-  const now = Date.now();
-  const list = (failures.get(email) || []).filter((t) => now - t < WINDOW_MS);
-  failures.set(email, list);
-  return list.length >= MAX_FAILURES;
-}
-
-export function recordLoginFailure(email: string) {
-  const list = failures.get(email) || [];
-  list.push(Date.now());
-  failures.set(email, list);
-}
-
-export function clearLoginFailures(email: string) {
-  failures.delete(email);
 }

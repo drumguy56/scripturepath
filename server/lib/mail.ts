@@ -1,25 +1,36 @@
-// Transactional email. Uses Resend's HTTP API when RESEND_API_KEY is set; otherwise the
-// message is printed to the server log so local development still works end to end.
+// Transactional email. Sends through Gmail SMTP when GMAIL_USER and GMAIL_APP_PASSWORD are set
+// (an app password, not the account password). Otherwise the message is printed to the server
+// log so local development still works end to end.
+import nodemailer from 'nodemailer';
+
 export type Mail = { to: string; subject: string; html: string; text: string };
 
+let transport: nodemailer.Transporter | null = null;
+function getTransport() {
+  if (!transport) {
+    transport = nodemailer.createTransport({
+      service: 'gmail',
+      auth: { user: process.env.GMAIL_USER, pass: process.env.GMAIL_APP_PASSWORD },
+    });
+  }
+  return transport;
+}
+
 export async function sendMail(mail: Mail): Promise<{ delivered: boolean }> {
-  const key = process.env.RESEND_API_KEY;
-  const from = process.env.MAIL_FROM || 'ScripturePath <no-reply@localhost>';
-  if (!key) {
+  const user = process.env.GMAIL_USER;
+  const pass = process.env.GMAIL_APP_PASSWORD;
+  if (!user || !pass) {
     console.log(`[mail:not-configured] to=${mail.to} subject="${mail.subject}"\n${mail.text}`);
     return { delivered: false };
   }
-  const res = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ from, to: [mail.to], subject: mail.subject, html: mail.html, text: mail.text }),
-    signal: AbortSignal.timeout(10_000),
-  });
-  if (!res.ok) {
-    console.error('[mail] Resend rejected the message', res.status, await res.text().catch(() => ''));
+  const from = process.env.MAIL_FROM || `ScripturePath <${user}>`;
+  try {
+    await getTransport().sendMail({ from, to: mail.to, subject: mail.subject, html: mail.html, text: mail.text });
+    return { delivered: true };
+  } catch (err) {
+    console.error('[mail] Gmail SMTP failed', err);
     return { delivered: false };
   }
-  return { delivered: true };
 }
 
 const escape = (value: string) =>

@@ -39,7 +39,7 @@ Docker or any Node/Bun host works. Run the server behind TLS.
 
 See `.env.example`. Required: `DATABASE_URL`, `ADMIN_EMAIL`. Everything else is optional:
 
-- `RESEND_API_KEY`, `MAIL_FROM`: send verification codes and the new-member alert by email. Without them, codes and alerts go to the server log.
+- `GMAIL_USER`, `GMAIL_APP_PASSWORD`, `MAIL_FROM` (optional): send verification codes and the new-member alert through Gmail SMTP. Use a Google app password, not the account password. Without them, codes and alerts go to the server log.
 - `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`: enable Google Calendar sync. Redirect URI `<APP_URL>/api/calendar/callback`, scope `calendar.events`. Without them, calendar connect returns 503.
 - `API_BIBLE_KEY`: Bible text from API.Bible. Without it, Bible chapters come from the fallback source.
 
@@ -50,7 +50,7 @@ See `.env.example`. Required: `DATABASE_URL`, `ADMIN_EMAIL`. Everything else is 
 - `server/routes/`: auth, entities, events (SSE), calendar (Google OAuth), functions.
 - `server/lib/policy.ts`: who can read and write what. Authorization lives here, not in the client.
 - `server/functions/`: group, weather, and Bible functions.
-- `server/db/`: schema, migrations (`npm run db:generate` after schema changes).
+- `server/db/`: schema, migrations (new migration with `bun server/db/new-migration.ts <name>` after schema changes).
 - `server/shared/`: curriculum and schedule helpers shared by server and client.
 - `public/media/`: curriculum images.
 

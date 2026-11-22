@@ -1,43 +1,16 @@
 import { boolean, index, jsonb, pgTable, primaryKey, text, timestamp } from 'drizzle-orm/pg-core';
 
-// Accounts. Passwords are argon2id hashes (Bun.password), never stored raw.
+// App-side account rows. Sign-in is handled by Neon Auth; `id` is the Neon Auth user id
+// (the JWT `sub`), and each row is created or refreshed on the user's first verified request.
 export const users = pgTable('users', {
   id: text('id').primaryKey(),
   email: text('email').notNull().unique(),
   full_name: text('full_name').notNull().default(''),
-  password_hash: text('password_hash').notNull(),
   role: text('role').notNull().default('user'),
-  verified: boolean('verified').notNull().default(false),
+  verified: boolean('verified').notNull().default(true),
   created_date: timestamp('created_date', { withTimezone: true }).notNull().defaultNow(),
   updated_date: timestamp('updated_date', { withTimezone: true }).notNull().defaultNow(),
 });
-
-// Opaque session tokens. Only the SHA-256 of the token is stored.
-export const sessions = pgTable(
-  'sessions',
-  {
-    token_hash: text('token_hash').primaryKey(),
-    user_id: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
-    expires_at: timestamp('expires_at', { withTimezone: true }).notNull(),
-    created_date: timestamp('created_date', { withTimezone: true }).notNull().defaultNow(),
-  },
-  (t) => [index('sessions_user_idx').on(t.user_id)]
-);
-
-// One-time codes: email verification (6-digit) and password reset (long token).
-export const authTokens = pgTable(
-  'auth_tokens',
-  {
-    id: text('id').primaryKey(),
-    email: text('email').notNull(),
-    purpose: text('purpose').notNull(), // 'verify' | 'reset'
-    token_hash: text('token_hash').notNull(),
-    attempts: text('attempts').notNull().default('0'),
-    expires_at: timestamp('expires_at', { withTimezone: true }).notNull(),
-    created_date: timestamp('created_date', { withTimezone: true }).notNull().defaultNow(),
-  },
-  (t) => [index('auth_tokens_email_idx').on(t.email, t.purpose)]
-);
 
 // Every app record (studies, lessons, groups, progress, journal, chat...) lives here.
 // Base columns are real columns; the entity's own fields live in `data`.
@@ -69,4 +42,39 @@ export const calendarConnections = pgTable(
     created_date: timestamp('created_date', { withTimezone: true }).notNull().defaultNow(),
   },
   (t) => [primaryKey({ columns: [t.user_id, t.provider] })]
+);
+
+// OAuth clients are created by an operator with server/scripts/oauth-client.ts. Only the
+// SHA-256 of a confidential client's secret is stored; public (PKCE-only) clients have none.
+export const oauthClients = pgTable('oauth_clients', {
+  client_id: text('client_id').primaryKey(),
+  name: text('name').notNull(),
+  secret_hash: text('secret_hash'),
+  redirect_uris: jsonb('redirect_uris').$type<string[]>().notNull().default([]),
+  created_date: timestamp('created_date', { withTimezone: true }).notNull().defaultNow(),
+});
+
+// Single-use authorization codes (hashed), valid for a few minutes, bound to PKCE.
+export const oauthCodes = pgTable('oauth_codes', {
+  code_hash: text('code_hash').primaryKey(),
+  client_id: text('client_id').notNull().references(() => oauthClients.client_id, { onDelete: 'cascade' }),
+  user_id: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  redirect_uri: text('redirect_uri').notNull(),
+  scope: text('scope').notNull(),
+  code_challenge: text('code_challenge').notNull(),
+  expires_at: timestamp('expires_at', { withTimezone: true }).notNull(),
+});
+
+// Access tokens (hashed). Expire after an hour; revoked when their client is deleted.
+export const oauthTokens = pgTable(
+  'oauth_tokens',
+  {
+    token_hash: text('token_hash').primaryKey(),
+    client_id: text('client_id').notNull().references(() => oauthClients.client_id, { onDelete: 'cascade' }),
+    user_id: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+    scope: text('scope').notNull(),
+    expires_at: timestamp('expires_at', { withTimezone: true }).notNull(),
+    created_date: timestamp('created_date', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index('oauth_tokens_user_idx').on(t.user_id)]
 );

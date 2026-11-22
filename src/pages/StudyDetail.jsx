@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
 import { entities } from '@/api/client';
 import { Image } from '@/components/ui/image';
+import StudyChat from '@/components/study/StudyChat';
 
 export default function StudyDetail() {
   const { studyId } = useParams();
@@ -175,6 +176,11 @@ export default function StudyDetail() {
               </div>
             )}
           </div>
+          {lessons.length > 0 && (
+            <div className="mt-5">
+              <StudyChat study={study} lessons={lessons} defaultLessonId={nextLesson?.id} />
+            </div>
+          )}
           <p className="mt-5 text-[12.5px] leading-relaxed text-muted-foreground">
             Work at your own pace. Everything you write in a lesson is saved to your
             journal, private to you.

@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
-import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import ScrollToTop from './components/ScrollToTop';
@@ -19,6 +19,12 @@ import Journal from '@/pages/Journal';
 import Read from '@/pages/Read';
 import Groups from '@/pages/Groups';
 import GroupDetail from '@/pages/GroupDetail';
+import OAuthAuthorize from '@/pages/OAuthAuthorize';
+
+const LoginRedirect = () => {
+  const location = useLocation();
+  return <Navigate to={`/login?next=${encodeURIComponent(location.pathname + location.search)}`} replace />;
+};
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth } = useAuth();
@@ -39,7 +45,8 @@ const AuthenticatedApp = () => {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
 
-      <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
+      <Route element={<ProtectedRoute unauthenticatedElement={<LoginRedirect />} />}>
+        <Route path="/oauth/authorize" element={<OAuthAuthorize />} />
         <Route element={<AppLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/library" element={<Library />} />

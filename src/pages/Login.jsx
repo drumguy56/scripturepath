@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { auth } from "@/api/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,6 +10,7 @@ import { useAuth } from "@/lib/AuthContext";
 
 export default function Login() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { checkUserAuth } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,14 +24,12 @@ export default function Login() {
     try {
       await auth.login(email, password);
       await checkUserAuth();
-      navigate("/", { replace: true });
+      const next = searchParams.get("next") || "";
+      // Only same-origin paths; never an absolute or protocol-relative URL.
+      const safe = next.startsWith("/") && !next.startsWith("//") ? next : "/";
+      navigate(safe, { replace: true });
     } catch (err) {
-      if (err.status === 403 && err.data?.needs_verification) {
-        // Account exists but was never verified: finish the code step first.
-        navigate(`/register?verify=${encodeURIComponent(email)}`, { replace: true });
-        return;
-      }
-      setError(err.message || "Invalid email or password");
+      setError(err.status === 401 ? "Incorrect email or password" : err.message || "Log in failed");
     } finally {
       setLoading(false);
     }
