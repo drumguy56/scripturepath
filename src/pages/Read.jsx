@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight, BookOpen } from 'lucide-react';
 import { functions } from '@/api/client';
 import { DEFAULT_REFERENCE, findBook, stepReference } from '@/data/bibleBooks';
 import ChapterReader from '@/components/bible/ChapterReader';
-import BookPicker from '@/components/bible/BookPicker';
+import BookChapterSelect from '@/components/bible/BookChapterSelect';
 
 const TRANSLATIONS = [
   { id: 'nlt', label: 'New Living Translation' },
@@ -50,7 +50,6 @@ export default function Read() {
   const [translation, setTranslation] = useState(() =>
     TRANSLATIONS.some((item) => item.id === stored?.translation) ? stored.translation : 'kjv'
   );
-  const [pickerOpen, setPickerOpen] = useState(false);
   const [verses, setVerses] = useState([]);
   const [reference, setReference] = useState('');
   const [loading, setLoading] = useState(true);
@@ -132,6 +131,11 @@ export default function Read() {
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
+          <BookChapterSelect
+            slug={slug}
+            chapter={chapter}
+            onChange={(nextSlug, nextChapter) => navigate(`/read/${nextSlug}/${nextChapter}`)}
+          />
           <select
             value={translation}
             onChange={(event) => setTranslation(event.target.value)}
@@ -144,13 +148,6 @@ export default function Read() {
               </option>
             ))}
           </select>
-          <button
-            type="button"
-            onClick={() => setPickerOpen(true)}
-            className="inline-flex h-[38px] items-center gap-2 rounded-[4px] border border-foreground/70 px-4 text-[12px] font-medium uppercase tracking-[0.12em] text-foreground transition-colors hover:bg-foreground hover:text-background"
-          >
-            <BookOpen className="h-3.5 w-3.5" /> Passage
-          </button>
         </div>
       </div>
 
@@ -235,12 +232,6 @@ export default function Read() {
         )}
       </div>
 
-      <BookPicker
-        open={pickerOpen}
-        onOpenChange={setPickerOpen}
-        currentSlug={slug}
-        onSelect={(nextSlug, nextChapter) => goTo({ slug: nextSlug, chapter: nextChapter })}
-      />
     </div>
   );
 }

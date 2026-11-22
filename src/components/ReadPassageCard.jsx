@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, BookOpen, ChevronDown } from 'lucide-react';
+import { ArrowRight, BookOpen } from 'lucide-react';
 import { findBook } from '@/data/bibleBooks';
-import BookPicker from '@/components/bible/BookPicker';
+import BookChapterSelect from '@/components/bible/BookChapterSelect';
 
 export default function ReadPassageCard() {
   const navigate = useNavigate();
   const [slug, setSlug] = useState('john');
   const [chapter, setChapter] = useState(1);
-  const [pickerOpen, setPickerOpen] = useState(false);
 
   const book = findBook(slug) || findBook('john');
 
@@ -26,15 +25,14 @@ export default function ReadPassageCard() {
         </p>
 
         <div className="mt-6 flex flex-wrap items-center gap-2.5">
-          <button
-            type="button"
-            onClick={() => setPickerOpen(true)}
-            aria-label="Choose a book and chapter"
-            className="inline-flex h-[42px] items-center gap-2.5 rounded-[4px] border border-border bg-background px-4 text-[13.5px] font-medium text-foreground transition-colors hover:border-foreground/40 hover:bg-secondary/60"
-          >
-            {book.name} {chapter}
-            <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />
-          </button>
+          <BookChapterSelect
+            slug={book.slug}
+            chapter={chapter}
+            onChange={(nextSlug, nextChapter) => {
+              setSlug(nextSlug);
+              setChapter(nextChapter);
+            }}
+          />
 
           <button
             type="button"
@@ -53,16 +51,6 @@ export default function ReadPassageCard() {
         </span>
       </div>
 
-      <BookPicker
-        open={pickerOpen}
-        onOpenChange={setPickerOpen}
-        currentSlug={book.slug}
-        onSelect={(nextSlug, nextChapter) => {
-          setSlug(nextSlug);
-          setChapter(nextChapter);
-          setPickerOpen(false);
-        }}
-      />
     </div>
   );
 }
