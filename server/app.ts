@@ -8,6 +8,7 @@ import { realtime } from './routes/realtime';
 import { ai } from './routes/ai';
 import { fn } from './routes/functions';
 import { oauth } from './routes/oauth';
+import { mobile } from './routes/mobile';
 import { HttpError } from './lib/records';
 
 export const app = new Hono();
@@ -20,6 +21,7 @@ app.route('/api/ai', ai);
 app.route('/api/functions', fn);
 app.route('/api/calendar', calendar);
 app.route('/api/oauth', oauth);
+app.route('/api/mobile', mobile);
 
 app.notFound((c) => {
   if (c.req.path.startsWith('/api/')) return c.json({ error: 'Not found' }, 404);
