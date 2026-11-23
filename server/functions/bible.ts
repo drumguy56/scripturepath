@@ -191,13 +191,30 @@ async function resolveNivBibleId(key) {
   return nivBibleId;
 }
 
+// API.Bible splits a verse into text nodes at line breaks (poetry) and inline markup, and the
+// nodes carry no spacing of their own. Put a space back where two words would otherwise touch.
+export function joinUsxText(prev, next) {
+  if (!prev || !next) return prev + next;
+  if (/\s$/.test(prev) || /^\s/.test(next)) return prev + next;
+  if (/[\p{L}\p{N},;.:!?)”’"]$/u.test(prev) && /^[\p{L}\p{N}“‘"(]/u.test(next)) return prev + ' ' + next;
+  return prev + next;
+}
+
+// API.Bible puts a stray space between stacked quote marks (“ ‘, ’ ”, ” ’). Close those gaps.
+export function tidyNivQuotes(text) {
+  return String(text || '')
+    .replace(/“\s+‘/g, '“‘')
+    .replace(/’\s+”/g, '’”')
+    .replace(/”\s+’/g, '”’');
+}
+
 // Walks API.Bible's USX JSON, splitting text at each verse marker and dropping notes.
 function readUsx(items, bucket) {
   for (const node of items || []) {
     if (!node || typeof node !== 'object') continue;
     if (node.type === 'text') {
       if (bucket.current !== null) {
-        bucket.text[bucket.current] = (bucket.text[bucket.current] || '') + (node.text || '');
+        bucket.text[bucket.current] = joinUsxText(bucket.text[bucket.current] || '', node.text || '');
       }
       continue;
     }
@@ -252,7 +269,7 @@ async function fetchNiv(key, book, chapter) {
     .sort((a, b) => a - b)
     .map((verse) => ({
       verse,
-      text: String(bucket.text[String(verse)] || '').replace(/\s+/g, ' ').trim(),
+      text: tidyNivQuotes(String(bucket.text[String(verse)] || '').replace(/\s+/g, ' ').trim()),
     }))
     .filter((item) => item.text);
 
